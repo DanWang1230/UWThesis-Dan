@@ -149,7 +149,9 @@
 
 \setcounter{page}{-1}
 \abstract{%
-A high-precision additive manufacturing process, laser powder bed fusion (LPBF) has enabled unmatched agile manufacturing of a wide range of products from engine components to medical implants. While finite element modeling and closed-loop control have been identified key for predicting and engineering part qualities in LPBF, existing results in each realm are developed in opposite computational architectures wildly different in time scale. This proposal builds a first-instance closed-loop simulation framework by integrating high-fidelity finite element modeling with feedback controls originally developed for general mechatronics systems. By utilizing the output signals (e.g., melt pool width) retrieved from the finite element model (FEM) to directly update the control signals (e.g., laser power) sent to the model, the proposed closed-loop framework enables testing the limits of advanced controls in LPBF and surveying the parameter space fully to generate more predictable part qualities. Along the course of formulating the framework, we verify the FEM by comparing its results with experimental and analytical solutions and then use the FEM to understand the melt-pool evolution induced by the thermomechanical interactions. From there, we build a repetitive control (RC) algorithm and a multirate fractional-order RC to greatly attenuate variations in LPBF.
+A high-precision additive manufacturing process, laser powder bed fusion (LPBF) has enabled unmatched agile manufacturing of a wide range of products from engine components to medical implants. While finite element modeling and closed-loop control have been identified key for predicting and engineering part qualities in LPBF, existing results in each realm are developed in opposite computational architectures wildly different in time scale. This dissertation builds a first-instance closed-loop simulation framework by integrating high-fidelity finite element modeling with feedback controls originally developed for general mechatronics systems. By utilizing the output signals (e.g., melt pool width) retrieved from the finite element model (FEM) to directly update the control signals (e.g., laser power) sent to the model, the proposed closed-loop framework enables testing the limits of advanced controls in LPBF and surveying the parameter space fully to generate more predictable part qualities.
+
+Along the course of formulating the framework, we verify the FEM by comparing its results with experimental and analytical solutions and then use the FEM to understand the melt-pool evolution induced by the thermomechanical interactions. From there, we build a repetitive control (RC) algorithm and a multirate fractional-order RC to greatly attenuate variations in LPBF.
 }
  
 %
@@ -162,49 +164,50 @@ A high-precision additive manufacturing process, laser powder bed fusion (LPBF) 
 %
 % ----- glossary 
 %
-\chapter*{Glossary}      % starred form omits the `chapter x'
-\addcontentsline{toc}{chapter}{Glossary}
+\chapter*{Nomenclature}      % starred form omits the `chapter x'
+\addcontentsline{toc}{chapter}{Nomenclature}
 \thispagestyle{plain}
 %
 \begin{glossary}
-\item[argument] replacement text which customizes a \LaTeX\ macro for
-each particular usage.
-\item[back-up] a copy of a file to be used when catastrophe strikes
-the original.  People who make no back-ups deserve
-no sympathy.
-\item[control sequence] the normal form of a command to \LaTeX.
-\item[delimiter] something, often a character, that indicates
-the beginning and ending of an argument.
-More generally, a delimiter is a field separator.
-\item[document class] a file of macros that tailors \LaTeX\ for
-a particular document.  The macros described by this thesis
-constitute a document class.
-\item[document option] a macro or file of macros
-that further modifies \LaTeX\ for
-a particular document.  The option {\tt[chapternotes]}
-constitutes a document option.
- 
+\item[AM] additive manufacturing
+\item[DOB] disturbance observer
+\item[FEM] finite element model
+\item[FTF] fundamental transfer function
+\item[HDD] hard disk drive
+\item[LMD] laser metal deposition
+\item[LPBF] laser powder bed fusion
+\item[NMP] nonminimum-phase
+\item[PFG] performance frequency gain
+\item[PID] proportional–integral–derivative
+\item[RC] repetitive control
+\item[RFG] robust frequency gain
+\item[YK] Youla-Kucera
 \end{glossary}
  
 %
 % ----- acknowledgments
 %
-\acknowledgments{
-This material is based upon work supported in part by the National
-Science Foundation under Grant No. 1953155. We would like to thank
-all the reviewers and editors for their insightful comments and great
-efforts towards improving this manuscript.
+\acknowledgments{\vskip2pc
+  {\narrower\noindent
+Along my Ph.D. journey, I have received a lot of support, help, and guidance.
+
+My deepest appreciation first goes to my advisor Prof. Xu Chen for the extraordinary guidance, support, and feedback on this dissertation. With every commented manuscript, every sharp research insight, and every timely discussion comes my sincerest gratitude. I have learned from Prof. Chen not only about profound knowledge of control theory but also about systematic research methodology, positive attitude, and perseverance. There were countless moments when I felt Prof. Chen was sprinkling the icing of wisdom on my head. I am also extremely grateful to Prof. Chen for being supportive and believing in me throughout my doctoral study. Besides, a lot of thanks to Prof. Chen and Prof. Zhanzha Jia for hosting the group gatherings and making me feel welcome, comfy, and at home.
+
+I am greatly thankful to have Prof. Santosh Devasia, Prof. Ramulu Mamidala, and Prof. Behçet Açikmeşe as my committee members. I truly appreciate the time and effort they have put into this dissertation. I have learned a lot from Prof. Santosh Devasi and Prof. Ramulu Mamidala about their studies and research attitude. Prof. Behçet Açikmeşe gave me great lectures about nonlinear control. I am so thankful for Prof. Xinyu Zhao's insight in building the FEM model. My sincere thanks also go to Prof. Jiong Tang, Prof. Horea Ilies, and Prof. Chengyu Cao for their great suggestions on this dissertation.
+
+I would also like to acknowledge the current members of the Mechatronics, Automation, and Control Systems Laboratory: Tianyu Jiang, Hui Xiao, Feifei Yang, and Hanah Choice. Many thanks to Tianyu for the experimental demonstration and to Hui for sharing the career development plan. Special thanks to Tianyu and Hui for all the help in life and for always having my back. Thanks to Feifei for updating the lab website for me. And thanks to Hanah for the power of positive emotions. Also, I'm enjoying mentoring and working with MS student Ruiwei Sui and UG student John Shim. They are wonderful.
+
+Last but not least, I would like to thank my parents Mingzhang Wang and Meiyan Sun for all the endless unconditional love and for teaching me to be brave and strong. Also, enormous thanks to my dearest friends Holly Xu, Maggie Wang, Dr. Jing Zhang, Prof. Zhanzhan Jia, Prof. Xin Xue, Leo Liu, Roger Fang, Dr. Xiao Ren, and Dr. Yuan Yuan and my sister Xiaohuan Lv for lifting my heart, lightening up my life, caring for me, and always being there for me. Without them, I would not have made it through my doctoral degree.
+  \par}
 }
 
 %
 % ----- dedication
 %
-\dedication{\begin{center}to my family and friends\end{center}}
+\dedication{\begin{center}To my family and friends\end{center}}
 
 %
 % end of the preliminary pages
- 
- 
  
 %
 % ==========      Text pages
@@ -230,13 +233,12 @@ in a ``slicing'' process (see, e.g., Fig. \ref{fig:Schematic-of-laser-scanning})
 will spread a new thin layer of powder over the just-fused layer,
 and then another cycle will begin.
 
-Broader adoption of the technology remains
+Despite the advantages and emerging applications, broader adoption of the LPBF technology remains
 challenged by insufficient reliability and in-process variations.
 These variations are induced by, for example, uncertain laser-material
 interactions, environmental vibrations, powder recycling, imperfect
 interactions of mechanical components, and complex thermal histories
-of materials\cite{wang2018multirate,kruth2007feedback,seyda2012investigation}. Current researches employ finite
-element modeling and feedback controls to understand the energy-deposition
+of materials\cite{wang2018multirate,kruth2007feedback,seyda2012investigation}. Current researches employ finite element modeling and feedback controls to understand the energy-deposition
 mechanisms and to regulate the in-process variations in LPBF. For instance,
 \cite{masoomi2017laser,hussein2013finite,foroozmehr2016finite,khairallah2016laser}
 adopt finite element modeling to investigate how various scan patterns,
@@ -294,96 +296,26 @@ we build a bidirectional architecture so that the output signals (e.g.,
 melt pool width or peak temperature) retrieved from the FEM can be
 utilized to directly update the FEM process parameters (e.g., laser
 power or scan speed) in external control toolboxes (e.g., MATLAB).
-In this way, we design an interface that enables simulating closed-loop
-controllers for LPBF thermal processes. Along the course of formulating
-the framework, XXXXX
+In this way, we design an interface that enables implementing
+and testing out feedback control strategies for LPBF thermal processes. Along the course of formulating the framework, we explore control-oriented modeling of the LPBF process and advanced feedback control algorithms to mitigate in-process variations and improve part quality.
 
-The major contributions of this chapter are:
-
-\begin{itemize}
-\item developing a closed-loop simulation architecture for implementing
-and testing out feedback control strategies in FEM;
-\item building an RC algorithm and an FEM of the LPBF thermal process, as
-applications of the proposed architecture;
-\item verifying the effectiveness of RC in regulating the periodic thermal
-interactions in LPBF.
-\end{itemize}
-The remainder of this chapter is structured as follows. Section \ref{chap:Closed-loop-Simulation}
-frames the main closed-loop high-fidelity simulation with the bidirectional
-architecture between FEM and controller. As application examples,
-Chapter \ref{chap:FEM} develops an FEM of the
-thermal fields in LPBF, and Section xxx
-builds an RC design to regulate the periodic thermal cycles. Under
-the architecture of the closed-loop simulation, Section \ref{chap:RC-Closed-loop-Simulation}
-evaluates the performance of RC. Section concludes
-the chapter.
-
-% Fractional-order Repetitive control
-This chapter discusses fractional-order repetitive control (RC) to advance
-the quality of periodic energy deposition in laser-based additive
-manufacturing (AM). It addresses an intrinsic RC limitation when the
-exogenous signal frequency cannot divide the sampling frequency of
-the sensor, e.g., in imaging-based control of fast laser-material
-interaction in AM. Three RC designs are proposed to address such fractional-order
-repetitive processes. In particular, a new multirate RC provides superior
-performance gains by generating high-gain control exactly at the fundamental
-and harmonic frequencies of exogenous signals. Experimentation on
-a galvo laser scanner in AM validates effectiveness of the designs.
+\section*{Major Contributions of This Dissertation}
 
 % Closed-loop simulation
-A high-precision additive manufacturing process, powder bed
-fusion (PBF) has enabled unmatched agile manufacturing of a wide range
-of products from engine components to medical implants. While finite
-element modeling and closed-loop control have been identified key
-for predicting and engineering part qualities in LPBF, existing results
-in each realm are developed in opposite computational architectures
-wildly different in time scale. This chapter builds a first-instance
+\subsection*{Closed-loop Simulation Integrating FEM with Feedback Control}
+One major contribution of the dissertation is building a first-instance
 closed-loop simulation framework by integrating high-fidelity finite
 element modeling with feedback controls originally developed for general
-mechatronics systems. By utilizing the output signals (e.g., melt
-pool width) retrieved from the finite element model (FEM) to update
-directly the control signals (e.g., laser power) sent to the model,
-the proposed closed-loop framework enables testing the limits of advanced
-controls in LPBF and surveying the parameter space fully to generate
-more predictable part qualities. Along the course of formulating the
-framework, we verify the FEM by comparing its results with experimental
+mechatronics systems. We build and refine the FEM of the temperature response in LPBF, which serves as an essential component of the proposed closed-loop simulation. We verify the FEM by comparing its results with experimental
 and analytical solutions and then use the FEM to understand the melt-pool
 evolution induced by the in- and cross-layer thermomechanical interactions.
-From there, we build a repetitive control algorithm to attenuate variations
+From there, we build a repetitive control (RC) algorithm to attenuate variations
 of the melt pool width.
 
-% Model inversion
-Stably inverting a dynamic system model is fundamental to subsequent
-servo designs. Current inversion techniques have provided effective
-model matching for feedforward controls. However, when the inverse
-models are to be implemented in feedback systems, additional considerations
-are demanded for assuring causality, robustness, and stability under
-closed-loop constraints. To bridge the gap between accurate model
-approximations and robust feedback performances, this chapter provides
-a new treatment of unstable zeros in inverse design. We provide first
-an intuitive pole-zero-map-based inverse tuning to verify the basic
-principle of the unstable-zero treatment. From there, for general
-nonminimum-phase and unstable systems, we propose an optimal inversion
-algorithm that can attain model accuracy at the frequency regions
-of interest while constraining noise amplification elsewhere to guarantee
-system robustness. Along the way, we also provide a modern review
-of model inversion techniques. The proposed algorithm is validated
-on motion control systems and complex high-order systems.
-
-% Spectral analysis
-A fundamental challenge in sampled-data control arises when a continuous-time plant is subject to disturbances that possess significant frequency components beyond the Nyquist frequency of the feedback sensor. Such intrinsic difficulties create formidable barriers for fast high-performance controls in modern and emerging technologies such as additive manufacturing and vision servo, where the update speed of sensors is low compared to the dynamics of the plant. This chapter analyzes spectral properties of closed-loop signals under such scenarios, with a focus on mechatronic systems. We propose a spectral analysis method that provides new understanding of the time- and frequency-domain sampled-data performance. Along the course of uncovering spectral details in such beyond-Nyquist controls, we also report a fundamental understanding on the infeasibility of single-rate high-gain feedback to reject disturbances not only beyond but also below the Nyquist frequency. New metrics and tools are then proposed to systematically quantify the limit of performance. Validation and practical implications of the limitations are provided with experimental case studies performed on a precision mirror galvanometer platform for laser scanning.
-
-% Loop shaping
-Many servo systems require micro/nano level positioning accuracy. This requirement sets a number of challenges from the viewpoint of sensing, actuation, and control algorithms. This chapter considers control algorithms for precision positioning. We examine how prior knowledge about the parameterization of control structure and the disturbance spectrum should be utilized in the design of control algorithms. An outer-loop inverse-based Youla-Kucera parameterization is built in the chapter. The presented algorithms are evaluated on a tutorial example of a galvo scanner system.
-
 % Hammerstein
-Despite the advantages and emerging applications, broader adoption
-of powder bed fusion (PBF) additive manufacturing is challenged by
-insufficient reliability and in-process variations. Finite element
-modeling and control-oriented modeling have been identified fundamental
-for predicting and engineering part qualities in LPBF. This chapter first
-builds a finite element model (FEM) of the thermal fields to look
-into the convoluted thermal interactions during the LPBF process. Using
+\subsection*{New Hammerstein Modeling}
+Control-oriented modeling is a fundamental tool
+for predicting and engineering part qualities in LPBF. Using
 the FEM data, we identify a novel surrogate system model from the
 laser power to the melt pool width. Linking a linearized model with
 a memoryless nonlinear submodel, we develop a physics-based Hammerstein
@@ -393,6 +325,57 @@ prove that the linearized model is only a representation of the Hammerstein
 model around the equilibrium point. Along the way, we conduct the
 stability and robustness analyses and formalize the Hammerstein model
 to facilitate the subsequent control designs.
+
+% Loop shaping
+\subsection*{Loop-shaping Control}
+Many servo systems including LPBF systems require micro/nano level positioning accuracy. This requirement sets a number of challenges from the viewpoint of sensing, actuation, and control algorithms. This dissertation considers control algorithms for precision positioning. We examine how to use prior knowledge about the parameterization of control structure and the disturbance spectrum to the design of control algorithms. An outer-loop inverse-based Youla-Kucera parameterization is built in the dissertation. The presented algorithms are evaluated on a precision galvo scanner system in LPBF.
+
+% Fractional-order Repetitive control
+\subsection*{Fractional-order Repetitive control}
+This dissertation discusses fractional-order RC to advance
+the quality of periodic energy deposition in LPBF. It addresses an intrinsic RC limitation when the
+exogenous signal frequency cannot divide the sampling frequency of
+the sensor, e.g., in imaging-based control of fast laser-material
+interaction in LPBF. Three RC designs are proposed to address such fractional-order
+repetitive processes. In particular, a new multirate RC provides superior
+performance gains by generating high-gain control exactly at the fundamental
+and harmonic frequencies of exogenous signals. Experimentation on
+the galvo laser scanner validates effectiveness of the designs.
+
+% Model inversion
+\subsection*{$H_\infty$-based Model Inversion}
+Stably inverting a dynamic system model is fundamental to subsequent
+servo designs, such as RC design. Current inversion techniques have provided effective
+model matching for feedforward controls. However, when the inverse
+models are to be implemented in feedback systems, additional considerations
+are demanded for assuring causality, robustness, and stability under
+closed-loop constraints. To bridge the gap between accurate model
+approximations and robust feedback performances, this dissertation provides
+a new treatment of unstable zeros in inverse design. We provide first
+an intuitive pole-zero-map-based inverse tuning to verify the basic
+principle of the unstable-zero treatment. From there, for general
+nonminimum-phase and unstable systems, we propose an $H_\infty$-based optimal inversion
+algorithm that can attain model accuracy at the frequency regions
+of interest while constraining noise amplification elsewhere to guarantee
+system robustness. Along the way, we also provide a modern review
+of model inversion techniques. The proposed algorithm is validated
+on motion control systems and complex high-order systems.
+
+% Spectral analysis
+\subsection*{Multirate Spectral Analysis near Nyquist Frequency}
+A fundamental challenge in sampled-data control arises when a continuous-time plant is subject to disturbances that possess significant frequency components beyond the Nyquist frequency of the feedback sensor. Such intrinsic difficulties create formidable barriers for fast high-performance controls in modern and emerging technologies such as LPBF AM and vision servo, where the update speed of sensors is low compared to the dynamics of the plant. This dissertation analyzes spectral properties of closed-loop signals under such scenarios, with a focus on mechatronic systems. We propose a spectral analysis method that provides new understanding of the time- and frequency-domain sampled-data performance. Along the course of uncovering spectral details in such beyond-Nyquist controls, we also report a fundamental understanding on the infeasibility of single-rate high-gain feedback to reject disturbances not only beyond but also below the Nyquist frequency. New metrics and tools are then proposed to systematically quantify the limit of performance. Validation and practical implications of the limitations are provided with experimental case studies performed on the galvo scanner platform.
+
+\
+
+\noindent The rest of the dissertation is structured as follows:
+
+In Part \ref{part:Closed-loop-Simulation}, we build the architecture of the proposed closed-loop high-fidelity simulation with bidirectional communication between FEM and feedback control.
+
+Part \ref{part:Control-oriented Modeling} elaborates one essential component of the closed-loop simulation, that is, the finite element modeling. Besides, from underlying physics, we develop a new Hammerstein model that captures more of the complicated spatiotemporal thermomechanical dynamics.
+
+In Part \ref{part:Multirate-Feedback-Control}, we investigate multirate feedback control algorithms, which serves as the other key component of the closed-loop simulation. In detail, Chapter \ref{chap:Loop-shaping-Control} introduces the general loop-shaping control methodologies. Chapter \ref{chap:Fractional-RC} builds a specific multirate fractional-order RC algorithm. Chapter \ref{chap:Model-Inversion} looks into the model inversion technique---an important piece of the loop-shaping control. Chapter \ref{chap:Spectral-Analysis} analyzes spectral properties of the closed-loop signals under multirate sample-data control.
+
+Under the infrastructure of the closed-loop simulation, Chapter \ref{chap:RC-Closed-loop-Simulation} provides a case study on applying RC to regulate the periodic thermal interactions in LPBF. Chapter \ref{chap:Conclusions} concludes this dissertation and discusses potential future work.
 
 % =========================================== Part 2
 
@@ -1381,24 +1364,9 @@ element, we can use a high-order polynomial to approximate $f$ (solid
 line in Fig. \ref{fig:Steady-state-melt-pool}). Besides, \cite{rayouf2019new}
 proposes an approximate method for the cases when $f$ is not invertible.
 
-\section{\label{sec:CONCLUSION}Summary}
-
-In the chapter, using
-the FEM data, we identify around the equilibrium point the linear
-system model from the laser power to the melt pool width. In addition,
-deriving from the Rosenthal equation, we reach a nonlinear closed-form
-expression of the steady-state melt pool width. Concatenating the
-nonlinear expression to the identified linear model, we develop the
-main Hammerstein model that captures more of the convoluted thermomechanical
-dynamics of LPBF. We prove that the Hammerstein mode gives a better
-approximation (e.g., 41\% increasing at 10 Hz) of the FEM result than
-the linear model. From there, we analyze the stability and robustness
-properties of the models and present a generic control scheme for
-the Hammerstein Model.
-
 % ========== Chapter 5
 
-\chapter{An Analytical Model of Melt Pool Width} \label{chap:Analytical-Model-MPW}
+% \chapter{An Analytical Model of Melt Pool Width} \label{chap:Analytical-Model-MPW}
 
 % =========================================== Part 3
 
@@ -1430,7 +1398,7 @@ positioning;
 clean room, and thermostatic chambers;
 \item \emph{task plans and arrangements}: well-designed trajectories, repetitive
 tasks in a manufacturing process, etc.;
-\item \emph{servo control algorithms}: adaptive control, repetitive control,
+\item \emph{servo control algorithms}: adaptive control, RC,
 predictive control, optimal control, and so on.
 \end{itemize}
 A well-designed precision system needs optimized considerations in
@@ -1465,7 +1433,7 @@ adaptive feedforward cancellation \cite{Bodson1997,chen2016multirate},
 disturbance observers \cite{XuChen_TCST2012,zheng2017design,chen2013selective},
 and Youla-Kucera (YK) parameterization \cite{landau2005adaptive,landau2013benchmark,youla1976modern,kucera1975stability};
 (ii) a fundamental frequency and its integer multiples by means of
-repetitive control and its variants \cite{chen2014new,steinbuch2007design};
+RC and its variants \cite{chen2014new,steinbuch2007design};
 (iii) broadband frequencies through adaptive disturbance rejection
 \cite{de2013adaptive}, adaptive noise cancellation \cite{widrow1975adaptive},
 and so on. This chapter discusses recent results in enhanced control
@@ -1890,7 +1858,7 @@ where $\alpha$ and $a$ have the same meanings as those in (\ref{eq:singleQ}).
 
 \subsection{Repetitive Control} \label{subsec:repetitive-control}
 
-An example application of repetitive control is for addressing the
+An example application of RC is for addressing the
 problem involved in wafer-scanning process, one key step for circuit
 fabrication in the semiconductor industry. To print the circuit, the
 wafer is exposed to patterned ultraviolet lights that come through
@@ -1900,13 +1868,13 @@ the limited size of the lens, only a small part of the wafer is exposed
 at each scan, and the wafer is moved from one field to another between
 the scans. The scanning process is repeated until all required areas
 on the wafer have been exposed under the light. An intuition about
-repetitive control is that if the same type of disturbance occurs
+RC is that if the same type of disturbance occurs
 after a fixed period of time, that is, $d(k)=d(k-N_{d})$ where $N_{d}$
 is the period of the disturbance, then at the next occurrence of $d(k)$,
 we can learn and reduce the resulting error, no matter how it behaves
 within one period of time. From the spectral perspective, the magnitude
 response of $1-z^{-m}Q(z)$ in Fig. \ref{fig:Q_wideband}
-provides a typical loop shape for repetitive control that $|1-e^{-jm\omega}Q(e^{j\omega})|$
+provides a typical loop shape for RC that $|1-e^{-jm\omega}Q(e^{j\omega})|$
 gives low gains to $|\tilde{S}(e^{j\omega})|$ at the fundamental
 frequency and its integer multiples. Meanwhile, at other frequencies
 $|1-e^{-jm\omega}Q(e^{j\omega})|$ is approximately unity yielding
@@ -2245,25 +2213,13 @@ adaptation algorithms to find a set of $\theta_{i}$ that minimizes
 the feedback error. This idea is also used in adaptive inverse control
 \cite{Widrow2007}.
 
-\section{Summary}
-
-\label{sec:conclu}In this chapter, the control methodologies for precision
-positioning systems have been studied. The central concept is that
-flexible loop shaping is a convenient tool for addressing various
-servo problems. Multiple simulation and experimental results on actual
-engineering problems (e.g., the galvo scanner platform) are used to validate the presented designs. Besides
-the examples given in this dissertation, the control structure has also
-been tested under other systems, such as electrical power steering
-in automotive vehicles \cite{chen2013inverse} and active suspension
-systems \cite{chen2013selective,landau2005adaptive}. 
-
 % ========== Chapter 7
 
 \chapter{Fractional-order Repetitive Control} \label{chap:Fractional-RC}
 
 \section{Introduction} \label{sec:Fractional-RC-Introduction}
 
-Repetitive control (RC) \cite{inoue1981highpower} is designed to
+RC \cite{inoue1981highpower} is designed to
 track/reject periodic exogenous signals in applications with repetitive
 tasks, as mentioned in Section \ref{subsec:repetitive-control}. By learning from memories of previous iterations in the repetitive
 task, RC can drastically enhance current control performance in the
@@ -3229,24 +3185,6 @@ the disturbances induced by the crosstalk are different in amplitudes.
 For each spike, as the frequency increases, the amplitude decreases
 (Fig. \ref{fig:FFT-of-the}).
 
-\section{Summary} \label{sec:Model-inverse-Summary}
-
-In this chapter, three repetitive control (RC) algorithms are proposed
-to overcome the intrinsic limitation of the RC internal model $1/(1-z^{-N})$
-under fractional-order situations that arise in selective laser sintering
-additive manufacturing. To apply repetitive error rejection when the
-fundamental disturbance frequency does not divide the sampling frequency,
-the wide-band RC scheme widens the attenuation widths to include the
-desired frequencies of the periodic disturbance. The quasi RC method,
-on the other hand, creates an integer $N$ by selecting the greatest
-common divisor of the sampling and fundamental disturbance frequencies
-as the fictitious fundamental frequency. The multirate RC applies
-a new fast sampling frequency that allows for exact attenuation at
-the desired repetitive frequencies. Numerical and experimental results
-verify the effectiveness of all three algorithms, and the multirate
-RC algorithm outperforms the wide-band and quasi ones by providing
-more systematic, precise servo enhancement, particularly at high frequencies.
-
 % ========== Chapter 8
 
 \chapter{$H_\infty$-based Model Inversion} \label{chap:Model-Inversion}
@@ -4134,22 +4072,6 @@ The model is then used to build an adaptive disturbance observer with
 an infinite impulse response structure to reject unknown or time-varying
 narrow-band vibrations.
 
-\section{Summary}
-
-In this chapter, we discussed new frequency-domain analysis and design
-approaches to invert a nonminimum-phase (NMP) linear time-invariant
-system, with a focus on robustness and needed design constraints in
-feedback implementations. We reveal that among existing model inversion
-techniques, the $H_{\infty}$-based method stands out by automatically
-identifying the inverse model without knowing the exact NMP zeros.
-Furthermore, we illustrated that modulating the location of the NMP
-zero only changes the system response at selective frequency regions.
-Leveraging this fact, for general NMP systems, we propose a discrete-time
-$H_{\infty}$-based optimal inversion to automatically design the
-inverse model for selective frequency regions defined by two weighting
-functions. Verification in complex high-order systems and unstable
-systems shows the strengths of the proposed algorithm.
-
 
 % ========== Chapter 9
 
@@ -4159,12 +4081,9 @@ systems shows the strengths of the proposed algorithm.
 
 Many modern manufacturing systems are increasingly
 subjected to the challenge of limited sensing in the design of control
-systems. For instance, in hard disk drive systems, the sampling speed
-of the closed loop is limited by the amount of physical servo sectors
-\cite{6387309,1461412}. In selective laser sintering additive manufacturing,
-infrared thermography cameras are expected to feedback more than 100,000
-frames of data every second, which is currently unattainable in a
-real-time control framework \cite{Berumen:2010hq,frazier2014metal}.
+systems. For instance, in LPBF, infrared thermography cameras are expected to feedback more than 100,000 frames of data every second, which is currently unattainable in a
+real-time control framework \cite{Berumen:2010hq,frazier2014metal}. In hard disk drive systems, the sampling speed of the closed loop is limited by the amount of physical servo sectors
+\cite{6387309,1461412}.
 Similar scenarios also appear in many other systems, such as vision-guided
 high-speed controls \cite{6605587,6926836} and chemical processes.
 This chapter studies performance of the control system in this important
@@ -4220,7 +4139,7 @@ for high-gain feedback control of sampled-data systems. We provide
 tools to analyze the limitation and guidance to implement the tools
 in practical problems. Theoretical analyses in this chapter are verified
 by both simulation and experimentation on a laser scanning platform
-in additive manufacturing.
+in AM.
 
 The main contributions of the chapter are:
 \begin{itemize}
@@ -4230,17 +4149,15 @@ behavior for beyond-Nyquist disturbances in sampled-data control;
 and discovering the existence of a principal sampled-data bandwidth
 $B_{p}$ below the Nyquist frequency;
 \item verifying numerically and experimentally the theoretical results in
-additive manufacturing.
+AM.
 \end{itemize}
-A preliminary version of the findings was presented in \cite{wang2016spectral}.
-In this chapter, we substantially expand the research with new theoretical
-results and experimental verifications. In the remainder of the chapter,
+
+In the remainder of this chapter,
 Section \ref{sec:Problem-Formulation} reviews several basics of sampled-data
-control; the main spectral analysis method is provided in Section
-\ref{sec:Main-results}; Sections \ref{sec:Numerical-Verification}
+control. The main spectral analysis method is provided in Section
+\ref{sec:Main-results}. Sections \ref{sec:Numerical-Verification}
 and \ref{sec:Experimental-Verification} provide the numerical and
-experimental verifications of the algorithm, respectively, after which
-Section concludes the chapter. 
+experimental verification of the algorithm, respectively. 
 
 \emph{Notations}: \label{sec:We-use-the}$x\left[n\right]$ and $x_{c}\left(t\right)$
 denote, respectively, a discrete sequence and a continuous-time signal.
@@ -4296,20 +4213,27 @@ X\left(\e^{j\omega}\right)=\frac{1}{T_{s}}\sum_{k=-\infty}^{\infty}X_{c}(j(\frac
 $(k=0)$ as the fundamental mode and the other terms $(k\neq0)$ in
 the right side of (\ref{eq:c2dFT}) as the shifted replicas.
 
-Because of (1), after $d_{c}$ passes the ADC and enters the feedback
+Because of (\ref{eq:c2dFT}), after $d_{c}$ passes the ADC and enters the feedback
 loop, $y_{c}(t)$ contains a fundamental mode plus an infinite number
 of aliases:
+\begin{figure}[!ht]
+\begin{centering}
+\includegraphics[width=10cm]{Spectral-analysis/FIG2.pdf}
+\par\end{centering}
+\caption{\label{fig:Block-diagramPCH-with}Block diagram of multirate sampled-data
+analysis.}
+\end{figure}
 
 \begin{lemma} \cite{astrom_computer-controlled_1996} If $d_{c}\left(t\right)=\e^{j\Omega_{o}t}$
 and the sampling time is $T_{s}$ in Fig. \ref{fig:Block-diagram-of},
 then the Fourier transform of the continuous-time plant output $y_{c}(t)$
-is{\scriptsize{}
+is
 \begin{multline}
 Y_{c}\left(j\Omega\right)=2\pi\left[1-\frac{1}{T_{s}}P_{c}\left(j\Omega\right)H\left(j\Omega\right)S_{d}(\e^{j\Omega T_{s}})C(\e^{j\Omega T_{s}})\right]\delta(\Omega-\Omega_{o})\\
 -\frac{2\pi}{T_{s}}P_{c}(j\Omega)H(j\Omega)S_{d}(\e^{j\Omega T_{s}})C(\e^{j\Omega T_{s}})\sum_{\begin{array}{c}
 k=-\infty,\ k\neq0\end{array}}^{\infty}\delta(\Omega-\Omega_{o}-\frac{2\pi}{T_{s}}k),\label{eq:distAtt}
 \end{multline}
-}where $\delta\left(\Omega-\Omega_{o}\right)$ denotes a shifted Dirac
+where $\delta\left(\Omega-\Omega_{o}\right)$ denotes a shifted Dirac
 delta impulse, $H(j\Omega)=(1-\e^{-j\Omega T_{s}})/(j\Omega)$ is
 the Fourier transform of the ZOH, and $S_{d}(\e^{j\Omega_{o}T_{s}})$
 is the frequency response of the discrete-time sensitivity function
@@ -4324,7 +4248,7 @@ In practice, the pure analog output $y_{c}(t)$ is infeasible to collect
 and store on digital computers. As an alternative, a fast signal sampled
 at $T_{s}^{'}$ is used to approximate the continuous-time output
 with $T_{s}^{'}=T_{s}/F$ ($F>1$ and $F\in\mathbb{Z}$). The problem
-then reduces to a multirate (MR) sampled-data control one, as shown
+then reduces to a multirate sampled-data control one, as shown
 in Fig. \ref{fig:Block-diagramPCH-with}, where the dotted and dashed
 lines represent the fast and slow signals sampled by $T_{s}^{'}$
 and $T_{s}$, respectively.
@@ -4335,7 +4259,7 @@ the power ratio between the input disturbance $d[k]=d(kT_{s}^{'})$
 and the output $y_{dh}[k]=y_{dh}(kT_{s}^{'})$:
 
 \noindent \begin{definition}\label{-Let-} Let $d[k]\in\left\{ d[k]:d[k]=c\e^{j\Omega kT_{s}^{'}},\left\Vert c\right\Vert _{2}<\infty\right\} $
-be applied to an MR system in Fig. \ref{fig:Block-diagramPCH-with}.
+be applied to an multirate system in Fig. \ref{fig:Block-diagramPCH-with}.
 The PFG $\mathcal{P}(e^{j\Omega T_{s}^{'}})$ is defined as
 \begin{equation}
 \mathcal{P}(e^{j\Omega T_{s}^{'}})\triangleq\sup_{d\neq0}\frac{\left\Vert y_{dh}[k]\right\Vert _{p}}{\left\Vert d[k]\right\Vert _{p}},\label{eq:Performance_freq_gain}
@@ -4347,21 +4271,14 @@ discrete-time signal power
 \left\Vert d[k]\right\Vert _{p}\triangleq\sqrt{\lim_{N\rightarrow\infty}\frac{1}{2N+1}\sum_{k=-N}^{N}\left\Vert d[k]\right\Vert ^{2}},\label{eq:Power}
 \end{equation}
 and $\left\Vert \cdot\right\Vert $ denotes the Euclidean vector norm.\end{definition}
-\begin{figure}[!ht]
-\begin{centering}
-\includegraphics[width=10cm]{Spectral-analysis/FIG2.pdf}
-\par\end{centering}
-\caption{\label{fig:Block-diagramPCH-with}Block diagram of multirate sampled-data
-analysis.}
-\end{figure}
 
 \section{\label{sec:Main-results}Spectral Analysis of Beyond-Nyquist Regulation
 Problems}
 
 To better motivate the analysis, consider two fast-sampled outputs
 $y_{dh}$ in Figs. \ref{fig:FFT-(sampling-time-1} and \ref{fig:FFT-(sampling-time-2}
-collected from experimentation on the mirror galvanometer system in
-Section \ref{sec:Experimental-Verification}. The outputs are fast
+collected from experimentation on the galvo scanner system in
+Section \ref{sec:A-Case-Study-on-a-Galvo-Scanner-System}. The outputs are fast
 sampled at $T_{s}^{'}=T_{s}/F$ with $F=4$. The Nyquist frequency
 is $\Omega_{N}=5\,\text{kHz}$. The disturbance frequencies are below
 $\Omega_{N}$ at $3\,\text{kHz}$ and beyond $\Omega_{N}$ at $7\,\text{kHz}$,
@@ -4525,7 +4442,7 @@ we have the following result:
 \begin{lemma}\label{If--and}If $P_{c}(s)=1/s^{n}$ and $n$ is a
 positive even integer, then $\Gamma_{k}^{*}(\frac{\pi}{T_{s}})=\infty$.\end{lemma}
 \begin{proof}
-See the Appendix.
+See Appendix \ref{chapA:Proof-of-Lemma-3}.
 \end{proof}
 Lemma \ref{If--and} illustrates a danger of designing single-rate
 high-gain controllers near the Nyquist frequency. With the limiting
@@ -4537,8 +4454,20 @@ output is significantly amplified. It is also worth pointing out that
 the special case of $P_{c}(s)=1/s^{2}$ is common in precision motion
 control (e.g., in hard disk drives \cite{AlMamun2007} and in wafer
 scanners used in semiconductor manufacturing).
+\begin{figure}[!ht]
+\begin{centering}
+\includegraphics[width=13cm]{Spectral-analysis/FIG5.pdf}
+\par\end{centering}
+\caption{\label{fig:the-first-three}Magnitude responses of $\Gamma_{k}(\Omega)$,
+$\Gamma_{k}^{*}(\Omega)$, $1-\Gamma_{k}(\Omega)$ and $1-\Gamma_{k}^{*}(\Omega)$
+as a function of $\Omega+2\pi k/T_{s}$, where $\Gamma_{k}^{*}(\Omega_{o})$
+and $\Gamma_{k}(\Omega_{o})$ denote the characteristic feedback loop
+gain with and without high-gain control respectively. The first three
+vertical lines indicate, respectively, the Nyquist frequency, the
+sampling frequency and $\nicefrac{3}{2T_{s}}$.}
+\end{figure}
 
-Fig. \ref{fig:the-first-three} illustrates the magnitudes of $\Gamma_{k}^{(*)}$
+Figure \ref{fig:the-first-three} illustrates the magnitudes of $\Gamma_{k}^{(*)}$
 and $1-\Gamma_{k}^{(*)}$ in a motion-control example in Section \ref{sec:Numerical-Verification}.
 The Nyquist frequency is indicated by the vertical line at $\pi/T_{s}$.
 The shapes of the curves match well with the above analysis. As an
@@ -4565,18 +4494,6 @@ In this interval, under single-rate high-gain control, $\Omega_{o}$
 being closer to $\pi/T_{s}$ causes larger servo degradation, which
 is different from classic servo control where disturbances at lower
 frequencies are commonly easier to be attenuated.
-\begin{figure}[!ht]
-\begin{centering}
-\includegraphics[width=13cm]{Spectral-analysis/FIG5.pdf}
-\par\end{centering}
-\caption{\label{fig:the-first-three}Magnitude responses of $\Gamma_{k}(\Omega)$,
-$\Gamma_{k}^{*}(\Omega)$, $1-\Gamma_{k}(\Omega)$ and $1-\Gamma_{k}^{*}(\Omega)$
-as a function of $\Omega+2\pi k/T_{s}$, where $\Gamma_{k}^{*}(\Omega_{o})$
-and $\Gamma_{k}(\Omega_{o})$ denote the characteristic feedback loop
-gain with and without high-gain control respectively. The first three
-vertical lines indicate, respectively, the Nyquist frequency, the
-sampling frequency and $\nicefrac{3}{2T_{s}}$.}
-\end{figure}
 \end{itemize}
 \begin{remark}For implementation, it is noteworthy that with the
 low-pass dynamics in ZOH, the first few frequency modes in (\ref{eq:Ycind_realSin})
@@ -4590,6 +4507,39 @@ in Sampled-data Control}
 
 In this subsection, we extend the analysis and study the full beyond-Nyquist
 spectra of the output signals.
+\begin{figure}[!ht]
+\begin{centering}
+\subfloat[\label{fig:}$d_{c}(t)=\cos(\Omega_{o}t)$ with the baseline control]{\begin{centering}
+\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6a}
+\par\end{centering}
+}
+\par\end{centering}
+\begin{centering}
+\subfloat[\label{fig:;-with-enhanced}$d_{c}(t)=\cos(\Omega_{o}t)$ with enhanced
+discrete-time high-gain control at $\Omega_{o}$ ]{\begin{centering}
+\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6b}
+\par\end{centering}
+}
+\par\end{centering}
+\begin{centering}
+\subfloat[\label{fig:-1}$\tilde{d}_{c}(t)=\cos(\Omega'_{o}t)=\cos((2\pi/T_{s}-\Omega_{o})t)$
+with the baseline control]{\begin{centering}
+\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6c}
+\par\end{centering}
+}
+\par\end{centering}
+\begin{centering}
+\subfloat[\label{fig:;-with-enhanced-1}$\tilde{d}_{c}(t)=\cos(\Omega'_{o}t)$
+with enhanced discrete-time high-gain control at $\Omega_{o}$ ]{\begin{centering}
+\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6d}
+\par\end{centering}
+}
+\par\end{centering}
+\caption{\label{fig:Illustration-of-the}Illustration of the spectrum of $y_{c}(t)$
+in sampled-data control when $\pi/T_{s}<\Omega_{o}<2\pi/T_{s}$. Dashed
+spikes: $\delta(\Omega+\Omega_{0})$ and its aliases; solid spikes:
+$\delta(\Omega-\Omega_{0})$ and its aliases.}
+\end{figure}
 
 Let $\Omega_{o}\in(\pi/T_{s},\,2\pi/T_{s})$ and $\Omega'_{o}=2\pi/T_{s}-\Omega_{o}\in(0,\,\pi/T_{s})$.
 Consider two different disturbances $d_{c}(t)\triangleq\cos(\Omega_{o}t)$
@@ -4649,38 +4599,21 @@ case in Figs. \ref{fig:} and \ref{fig:;-with-enhanced} while Fig.
 and \ref{fig:;-with-enhanced-1}. 
 \begin{figure}[!ht]
 \begin{centering}
-\subfloat[\label{fig:}$d_{c}(t)=\cos(\Omega_{o}t)$ with the baseline control]{\begin{centering}
-\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6a}
+\subfloat[\label{fig:-sampled-at-1}$y_{d}(t)$ with the sampling time of $T_{s}$.]{\begin{centering}
+\includegraphics[width=13cm]{Spectral-analysis/FIG7a}
 \par\end{centering}
 }
 \par\end{centering}
 \begin{centering}
-\subfloat[\label{fig:;-with-enhanced}$d_{c}(t)=\cos(\Omega_{o}t)$ with enhanced
-discrete-time high-gain control at $\Omega_{o}$ ]{\begin{centering}
-\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6b}
+\subfloat[\label{fig:Output}$y_{dh}(t)$ with the sampling time of $T_{s}^{'}$.]{\begin{centering}
+\includegraphics[width=13cm]{Spectral-analysis/FIG7b.pdf}
 \par\end{centering}
 }
 \par\end{centering}
-\begin{centering}
-\subfloat[\label{fig:-1}$\tilde{d}_{c}(t)=\cos(\Omega'_{o}t)=\cos((2\pi/T_{s}-\Omega_{o})t)$
-with the baseline control]{\begin{centering}
-\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6c}
-\par\end{centering}
-}
-\par\end{centering}
-\begin{centering}
-\subfloat[\label{fig:;-with-enhanced-1}$\tilde{d}_{c}(t)=\cos(\Omega'_{o}t)$
-with enhanced discrete-time high-gain control at $\Omega_{o}$ ]{\begin{centering}
-\includegraphics[clip,width=10cm]{Spectral-analysis/FIG6d}
-\par\end{centering}
-}
-\par\end{centering}
-\caption{\label{fig:Illustration-of-the}Illustration of the spectrum of $y_{c}(t)$
-in sampled-data control when $\pi/T_{s}<\Omega_{o}<2\pi/T_{s}$. Dashed
-spikes: $\delta(\Omega+\Omega_{0})$ and its aliases; solid spikes:
-$\delta(\Omega-\Omega_{0})$ and its aliases.}
+\caption{\label{fig:Plant-output-for-3}Plant output with the input disturbance
+at $1.4\Omega_{N}$ (\emph{The solid and dashed lines represent the
+cases with single-rate high-gain control on and off, respectively}.)}
 \end{figure}
- 
 
 Next we show how to \emph{connect the frequency-domain results with
 the time-domain observations}. With sub-Nyquist high-gain control,
@@ -4709,23 +4642,6 @@ on the other hand, achieves zero $T_{s}$-sampled output by reducing
 the magnitude of $1-\Gamma_{0}(\Omega'_{o})$.
 \begin{figure}[!ht]
 \begin{centering}
-\subfloat[\label{fig:-sampled-at-1}$y_{d}(t)$ with the sampling time of $T_{s}$.]{\begin{centering}
-\includegraphics[width=13cm]{Spectral-analysis/FIG7a}
-\par\end{centering}
-}
-\par\end{centering}
-\begin{centering}
-\subfloat[\label{fig:Output}$y_{dh}(t)$ with the sampling time of $T_{s}^{'}$.]{\begin{centering}
-\includegraphics[width=13cm]{Spectral-analysis/FIG7b.pdf}
-\par\end{centering}
-}
-\par\end{centering}
-\caption{\label{fig:Plant-output-for-3}Plant output with the input disturbance
-at $1.4\Omega_{N}$ (\emph{The solid and dashed lines represent the
-cases with single-rate high-gain control on and off, respectively}.)}
-\end{figure}
-\begin{figure}[!ht]
-\begin{centering}
 \subfloat[\label{fig:-sampled-at-2}$y_{d}(t)$ with the sampling time of $T_{s}$.]{\begin{centering}
 \includegraphics[width=13cm]{Spectral-analysis/FIG8a.pdf}
 \par\end{centering}
@@ -4742,7 +4658,7 @@ at $0.6\Omega_{N}$ (\emph{The solid and dashed lines represent the
 cases with single-rate high-gain control on and off, respectively}.)}
 \end{figure}
 
-\subsection{Performance Frequency Gain and the Fundamental Mode}
+\subsection{Performance Frequency Gain and the Fundamental Mode} \label{subsec:Performance-Frequency-Gain-and}
 
 With the understanding of individual mode shapes, we can better relate
 the spectral responses to the time-domain data in sampled-data control
@@ -4751,18 +4667,18 @@ connects the analysis of the individual modes with the PFG metric.
 An important observation is that under single-rate high-gain control,
 PFG also has a high gain near the Nyquist frequency.
 
-Recall the transformation of a sampled-data system into an MR one
+Recall the transformation of a sampled-data system into an multirate one
 by fast sampling in Fig. \ref{fig:Block-diagramPCH-with}. The fast
 and slow signals are sampled by $T_{s}^{'}$ and $T_{s}=FT_{s}^{'}$,
 respectively. Let $D(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})$
 denote the DTFT of $d[k]$. Analogous to the derivation of (\ref{eq:distAtt}),
 the DTFT of the fast-sampled output $y_{dh}[k]$ \cite{oomen2007design}
-is \emph{\scriptsize{}
+is
 \begin{multline}
 Y_{dh}(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})=\left[1-\frac{1}{F}P_{dh}(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})H(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})T_{d}(\e^{j\Omega T_{s}})/P_{d}(\e^{j\Omega T_{s}})\right]D(\e^{j\Omega T_{s}^{'}})\\
 +\frac{1}{F}P_{dh}(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})H(\text{\ensuremath{\e}}^{j\Omega T_{s}^{'}})T_{d}(\e^{j\Omega T_{s}})/P_{d}(\e^{j\Omega T_{s}})\sum_{k=1}^{F-1}D(\e^{j(\Omega T_{s}^{'}-\frac{2\pi k}{F})}),\label{eq:multirate_ydh}
 \end{multline}
-}where $P_{d}$ and $P_{dh}$ represent the ZOH plant models under
+where $P_{d}$ and $P_{dh}$ represent the ZOH plant models under
 the sampling time of $T_{s}$ and $T_{s}^{'}$, respectively, and
 the transfer function of the ZOH interpolator is\emph{
 \begin{equation}
@@ -4773,7 +4689,7 @@ F & \quad z=1\\
 \end{equation}
 }
 
-Based on (\ref{eq:multirate_ydh}), the MR characteristic feedback
+Based on (\ref{eq:multirate_ydh}), the multirate characteristic feedback
 loop gain is defined as
 
 \begin{equation}
@@ -4786,7 +4702,7 @@ is
 \begin{equation}
 \Gamma_{k}^{*}(\Omega_{o})=\frac{P_{dh}(\e^{j(\Omega_{o}T_{s}^{'}+\frac{2\pi k}{F})})H(\e^{j(\Omega_{o}T_{s}^{'}+\frac{2\pi k}{F})})}{FP_{d}(\e^{j\Omega_{0}T_{s}})}.\label{eq:Gammk_multirate}
 \end{equation}
-\begin{lemma}\label{For-the-MR}For the MR system in Fig. \ref{fig:Block-diagramPCH-with},
+\begin{lemma}\label{For-the-multirate}For the multirate system in Fig. \ref{fig:Block-diagramPCH-with},
 the modified PFG under single-rate high-gain control at $\Omega_{0}$
 is
 
@@ -4796,7 +4712,7 @@ is
 \end{lemma}
 
 The derivation is similar to the one introduced in \cite{oomen2007design}
-and is omitted here. Lemma \ref{For-the-MR} connects the input-output
+and is omitted here. Lemma \ref{For-the-multirate} connects the input-output
 power ratio with the gains of the individual signal modes. PFG evaluates
 the overall effect of the intersample behavior and how a sampled-data
 control system attenuates or amplifies input disturbances in certain
@@ -4840,7 +4756,7 @@ called the \emph{principal sampled-data bandwidth} $B_{p}$. \end{definition}
 \begin{lemma}\label{For-general-mechatronic}For general mechatronic
 systems, $B_{p}$ is smaller than the Nyquist frequency.\end{lemma} 
 \begin{proof}
-See the Appendix.
+See Appendix \ref{chapA:Proof-of-Lemma-5}.
 \end{proof}
 \emph{Implications}: Similar to the analyses of the discrete-time
 sensitivity function in digital control, the proposed PFG analysis
@@ -4895,7 +4811,7 @@ compute the modified PFG from the input-to-output power ratio in Definition
 the trend of the individual spectral spikes.
 \end{enumerate}
 
-section{Numerical Verification\label{sec:Numerical-Verification}}
+\section{Numerical Verification\label{sec:Numerical-Verification}}
 
 Consider a plant $P_{c}(s)=3.74488\times10^{9}/(s^{2}+565.5s+319775.2)$
 with an input delay of $10\,$$\muup$s. Let the sampling time
@@ -4910,20 +4826,7 @@ and above the Nyquist frequency are introduced to the plant. The narrow-band
 disturbance observer (DOB) \cite{XuChen_TCST2012} is applied on top
 of the PID controller. Such a design provides perfect compensation
 of above- and below-Nyquist sinusoidal signals in the \emph{sampled}
-output $y_{d}[k]$. 
-
-Figs. \ref{fig:Plant-output-for} and \ref{fig:disturbance-at-1.8}
-present the time- and frequency-domain computation results, which
-verify the limitation of single-rate high-gain control for beyond-Nyquist
-disturbance rejection. The results match with the prediction in Fig.
-\ref{fig:Illustration-of-the} that single-rate high-gain control
-amplifies beyond-Nyquist disturbances. When the disturbance occurs
-at 2376 Hz ($1.8\Omega_{N}$), the intersample signal is significantly
-amplified in Fig. \ref{fig:Continuous-time-output-1}, although high-gain
-control yields zero sampled-output at steady state (Fig. \ref{fig:Output-sampled-at}).
-The amplification is also evident in the frequency domain (Fig. \ref{fig:disturbance-at-1.8}).
-Single-rate high-gain control barely changes the fundamental component
-at 2376 Hz but greatly amplifies the aliased component at 264 Hz.
+output $y_{d}[k]$.
 \begin{figure}[!ht]
 \begin{centering}
 \subfloat[\label{fig:Output-sampled-at}$y_{c}(t)$ sampled at $T_{s}$.]{\begin{centering}
@@ -4941,6 +4844,19 @@ at 2376 Hz but greatly amplifies the aliased component at 264 Hz.
 at $1.8\Omega_{N}$ (\emph{The solid and dashed lines represent the
 cases with single-rate high-gain control on and off, respectively}.)}
 \end{figure}
+
+Figs. \ref{fig:Plant-output-for} and \ref{fig:disturbance-at-1.8}
+present the time- and frequency-domain computation results, which
+verify the limitation of single-rate high-gain control for beyond-Nyquist
+disturbance rejection. The results match with the prediction in Fig.
+\ref{fig:Illustration-of-the} that single-rate high-gain control
+amplifies beyond-Nyquist disturbances. When the disturbance occurs
+at 2376 Hz ($1.8\Omega_{N}$), the intersample signal is significantly
+amplified in Fig. \ref{fig:Continuous-time-output-1}, although high-gain
+control yields zero sampled-output at steady state (Fig. \ref{fig:Output-sampled-at}).
+The amplification is also evident in the frequency domain (Fig. \ref{fig:disturbance-at-1.8}).
+Single-rate high-gain control barely changes the fundamental component
+at 2376 Hz but greatly amplifies the aliased component at 264 Hz.
 \begin{figure}[!ht]
 \begin{centering}
 \includegraphics[width=13cm]{Spectral-analysis/FIG11.pdf}
@@ -4979,29 +4895,12 @@ at $0.7\Omega_{N}$}
 
 \section{Experimental Verification\label{sec:Experimental-Verification}}
 
-Experiments are conducted on the galvo scanner platform (Fig. \ref{fig:Schematic-of-hardware-LS}),
-a key component in laser-based additive manufacturing. Typically,
-a galvo scanner is composed of mirrors, galvanometers, and control
-systems. The mirrors are actuated to reflect the input laser beam
-to generate a scanning trajectory at high speed with high precision.
-The angular rotation of the mirrors are measured by encoders. 
-
-\begin{figure}[!ht]
-\begin{centering}
-\includegraphics[width=13cm]{Spectral-analysis/FIG15.pdf}
-\par\end{centering}
-\caption{\label{fig:Block-diagram-with}Block diagram with a disturbance observer
-(DOB).}
-\end{figure}
- 
-
-To form a baseline servo system, a built-in PID-type controller $C_{0}(z)$
+Experiments are conducted on the galvo scanner platform (Fig. \ref{fig:Schematic-of-hardware-LS}). To form a baseline servo system, a built-in PID-type controller $C_{0}(z)$
 is embedded in the motor driver. $C_{0}(z)$ and the actual plant
-$P_{0}(z)$ are treated as the new plant $P_{dh}(z)$ in this study.
+$P_{0}(z)$ are treated as the new plant $P_{dh}(z)$, as in Section \ref{sec:Proposed0-controller-factorization}.
 Fig. \ref{fig:Magnitude-response-of-1} shows the frequency response of the measured
-and identified $P_{dh}(z)$ (aka identified $\hat{L}(z)$). The DOB \cite{XuChen_TCST2012} with
-$C(z)=1$ in Fig. \ref{fig:Block-diagram-with} is implemented on
-a dSPACE DS1104 processor board to enable high-gain control at selective
+and identified $P_{dh}(z)$ (aka identified $\hat{L}(z)$ in Fig. \ref{fig:Magnitude-response-of-1}). The DOB \cite{XuChen_TCST2012} with
+$C(z)=1$ in Fig. \ref{fig:Block-diagram-with} is implemented to enable high-gain control at selective
 frequencies. Transfer functions inside the DOB block are all implemented
 at a sampling time of $T_{s}=0.1\,\text{ms}$. Thus the Nyquist frequency
 $\Omega_{N}$ equals $5\text{ kHz}$. The fundamental sampling time
@@ -5012,6 +4911,13 @@ with magnitude 0.1V and frequency $\omega_{o}=2\pi\Omega_{o}T_{s}^{'}$
 ($\Omega_{o}$ in Hz) is introduced to the system. In addition, the
 system is subjected to broadband random disturbances at a magnitude
 of about 20 mV.
+\begin{figure}[!ht]
+\begin{centering}
+\includegraphics[width=13cm]{Spectral-analysis/FIG15.pdf}
+\par\end{centering}
+\caption{\label{fig:Block-diagram-with}Block diagram with a disturbance observer
+(DOB).}
+\end{figure}
 \begin{figure}[!ht]
 \begin{centering}
 \includegraphics[width=13cm]{Spectral-analysis/FIG16.pdf}
@@ -5093,30 +4999,6 @@ output energy for the disturbances at $4\,\text{kHz}$ and 7 kHz.
 Fig. \ref{fig:Magnitude-responses-of-10} additionally reveals that both
 the fundamental and aliased mode gains are increased when disturbances
 occur at $4\,\text{kHz}$ and 7 kHz.
-
-The experimental result in Fig. \ref{fig:FFT-(sampling-time-1} verifies
-that for the input disturbance with $\Omega_{o}=1.4\Omega_{N}=7\textnormal{ kHz}$,
-the fundamental component at 7 kHz and the aliased harmonic at 3 kHz
-are amplified when customized single-rate high-gain control is turned
-on. For the case with $\Omega_{o}=0.8\Omega_{N}=4\textnormal{ kHz}$,
-the magnitude of the fundamental mode at $4\textnormal{ kHz}$ barely
-changes, but the aliased harmonic at 6 kHz is amplified by sub-Nyquist
-high-gain control, resulting in the overall amplification. For $\Omega_{o}=0.6\Omega_{N}=3\textnormal{ kHz}$,
-$\left|1-\Gamma_{0}^{*}(\Omega_{o})\right|<\left|1-\Gamma_{0}(\Omega_{o})\right|$,
-and $\left|\Gamma_{1}^{*}(-\Omega_{o})\right|>\left|\Gamma_{1}(-\Omega_{o})\right|$;
-although the aliased mode at 7 kHz is slightly amplified, the attenuation
-of the fundamental mode at 3 kHz is significant (Fig. \ref{fig:FFT-(sampling-time-2}),
-resulting in the overall attenuation.
-\begin{figure}[!ht]
-\begin{centering}
-\includegraphics[width=13cm]{Spectral-analysis/FIG18.pdf}
-\par\end{centering}
-\caption{\label{fig:Magnitude-responses-of-10}Magnitude responses of $\Gamma_{k}(\Omega)$,
-$\Gamma_{k}^{*}(\Omega)$, $1-\Gamma_{k}(\Omega)$ and $1-\Gamma_{k}^{*}(\Omega)$
-as a function of $\Omega+2\pi k/T_{s}$. The first three vertical
-lines indicate, respectively, the Nyquist frequency (5 kHz), the sampling
-frequency and $\nicefrac{3}{2T_{s}}$.}
-\end{figure}
 \begin{figure}[!ht]
 \begin{centering}
 \subfloat[\label{fig:-sampled-at-3}$y_{d}(t)$ with the sampling time of $T_{s}$.]{\begin{centering}
@@ -5142,44 +5024,45 @@ represent the cases with single-rate high-gain control on and off,
 respectively}.)}
 \end{figure}
 
+The experimental result in Fig. \ref{fig:FFT-(sampling-time-1} verifies
+that for the input disturbance with $\Omega_{o}=1.4\Omega_{N}=7\textnormal{ kHz}$,
+the fundamental component at 7 kHz and the aliased harmonic at 3 kHz
+are amplified when customized single-rate high-gain control is turned
+on. For the case with $\Omega_{o}=0.8\Omega_{N}=4\textnormal{ kHz}$,
+the magnitude of the fundamental mode at $4\textnormal{ kHz}$ barely
+changes, but the aliased harmonic at 6 kHz is amplified by sub-Nyquist
+high-gain control, resulting in the overall amplification. For $\Omega_{o}=0.6\Omega_{N}=3\textnormal{ kHz}$,
+$\left|1-\Gamma_{0}^{*}(\Omega_{o})\right|<\left|1-\Gamma_{0}(\Omega_{o})\right|$,
+and $\left|\Gamma_{1}^{*}(-\Omega_{o})\right|>\left|\Gamma_{1}(-\Omega_{o})\right|$;
+although the aliased mode at 7 kHz is slightly amplified, the attenuation
+of the fundamental mode at 3 kHz is significant (Fig. \ref{fig:FFT-(sampling-time-2}),
+resulting in the overall attenuation.
+\begin{figure}[!ht]
+\begin{centering}
+\includegraphics[width=13cm]{Spectral-analysis/FIG18.pdf}
+\par\end{centering}
+\caption{\label{fig:Magnitude-responses-of-10}Magnitude responses of $\Gamma_{k}(\Omega)$,
+$\Gamma_{k}^{*}(\Omega)$, $1-\Gamma_{k}(\Omega)$ and $1-\Gamma_{k}^{*}(\Omega)$
+as a function of $\Omega+2\pi k/T_{s}$. The first three vertical
+lines indicate, respectively, the Nyquist frequency (5 kHz), the sampling
+frequency and $\nicefrac{3}{2T_{s}}$.}
+\end{figure}
+
 In summary, we experimentally verified that the characteristic feedback
 loop gains, along with the modified PFG, are reliable tools for analyzing
 servo performance in sampled-data control. Single-rate high-gain control
 is observed to amplify all beyond-Nyquist and even some below-Nyquist
-disturbances. 
-
-\section{Summary}
-
-In this chapter, the problem of sampled-data regulation control against
-structured disturbances around and beyond the Nyquist frequency is
-analyzed. It is shown that the conventional sub-Nyquist single-rate
-high-gain control is infeasible to attenuate disturbances near and
-beyond the Nyquist frequency. We discover an intersection frequency
-defined as the principal sampled-data bandwidth $B_{p}$. Only for
-below-$B_{p}$ disturbances can single-rate high-gain control be effective
-in disturbance rejection. A spectral analysis is further proposed
-to look into individual spectral modes. The proposed characteristic
-feedback loop gains are combined with the performance frequency gain
-to evaluate the overall sampled-data performance. The results imply
-that the rejection of beyond-Nyquist vibration disturbances must rely
-on tools that can facilitate the intersample attenuation, such as
-customized multirate control \cite{XuChen_beyondNyquist15}, sampled-data
-internal model principle \cite{Fujioka:2011dy}, sampled-data LQG
-\cite{Chen:1991cp}, sampled-data all-stabilizing control \cite{Ravi:1990eo},
-and sampled-data $H_{\infty}$ theory (see \cite{Lall:2001cm} and
-the references therein). For potential future work, the proposed study
-may have synergy with the analysis and design of nonlinear systems
-in the frequency domain (e.g., \cite{jing2015frequency,lang2007output,xiao2016frequency}).
+disturbances.
 
 % ========== Chapter 10
 
 \chapter{Case Study: Repetitive Control in Closed-loop Simulation} \label{chap:RC-Closed-loop-Simulation}
 
-Under the infrastructure of the closed-loop simulation, we evaluate
+Under the infrastructure of the closed-loop simulation in Chapter \ref{chap:Closed-loop-Simulation}, we integrate control-oriented modeling in Part \ref{part:Control-oriented Modeling} with feedback control \ref{part:Multirate-Feedback-Control} and evaluate
 the performance of RC in attenuating the periodic in-layer variations
 of the melt pool width.
 
-First, we identify the plant model of the FEM in Section xxxx
+First, we identify the plant model of the FEM in Chapter \ref{chap:FEM}
 from the laser power to the melt pool width as $P(s)=0.001671/(s+1055)$.
 The input signals used for system identification include a pseudorandom
 binary sequence (PRBS) signal and multiple sinusoidal signals (10$\sim$300
@@ -5194,19 +5077,20 @@ with each other, as shown in Fig. \ref{fig:Magnitude-responses-of-3}.
 \centering{}\caption{\label{fig:Magnitude-responses-of-3}Magnitude responses of sensitivity
 functions $S(z)$ in baseline control and $S_{0}(z)$ in RC.}
 \end{figure}
+
 After that, we design a PI controller as $C(s)=K_{p}+K_{i}/s$ with
 $K_{p}=9.38\times10^{5}$ and $K_{i}=1.66\times10^{9}$. Under the
-sampling time $t_{s}$ of $0.5\,\text{ms}$ (i.e., $f_{s}=2\,\text{kHz}$),
+sampling time $T_{s}$ of $0.5\,\text{ms}$ (i.e., $f_{s}=2\,\text{kHz}$),
 the zero-order-hold equivalents of the plant and controller models
 respectively are $P(z)=6.493\times10^{-7}/(z-0.5901)$ and $C(z)=(9.38z-1.08)\times10^{5}/(z-1)$.
 The dashed line in Fig. \ref{fig:Magnitude-responses-of-3} shows the
 magnitude response of the sensitivity function $S(z)$ in the baseline
 feedback loop that comprises $P(z)$ and $C(z)$. Such a design provides
 a bandwidth at $197\,\text{Hz}$, which approximates the limit of
-20\% of the Nyquist frequency ($1000\,\text{Hz}$) and indicates that
+20\% of the Nyquist frequency ($1\,\text{kHz}$) and indicates that
 the PI controller is well tuned. The closed-loop simulations are designed
-according to Chapter \ref{chap:FEM} integrating
-FEM with baseline control and RC, respectively. In this disturbance-rejection
+according to Chapter \ref{chap:Closed-loop-Simulation} integrating
+FEM with baseline control and RC in Section \ref{sec:Repetitve-Control}, respectively. In this disturbance-rejection
 example, $r(k)=0$ in Fig. \ref{fig:Block-diagram-RC}, and $d(k)$
 comes from the in-layer melt-pool-width variations (Section \ref{subsec:In-layer-Effects}).
 From Fig. \ref{fig:FFT-of-melt-pool-width-1}, we can tell that the
@@ -5216,7 +5100,6 @@ case without control, the baseline feedback loop decreases the $3\sigma$
 value of the melt-pool-width changes ($y(k)$ in Fig. \ref{fig:Block-diagram-RC}
 with mean removed) by 21.57\%, where $\sigma$ denotes the standard
 deviation.
-
 \begin{figure}[ht]
 \begin{centering}
 \subfloat[\label{fig:Evolution-of-melt-1}Evolution of melt pool width (time-domain)]{\begin{centering}
@@ -5247,15 +5130,16 @@ standard deviation. The earlier results in Fig. \ref{fig:In-layer-melt-pool-1}
 are superimposed in Figs. \ref{fig:Evolution-of-melt-1} and \ref{fig:FFT-of-melt-pool-width-1}
 for clarity.}
 \end{figure}
+
 To enhance the disturbance-attenuation performance, we bring the plug-in
 RC compensator in Section \ref{sec:Repetitve-Control}
 into the closed-loop high-fidelity simulation. In the $Q$-filter
-design in (xxxxx), the relative degree $m$ of $\hat{P}(z)$
+design in (\ref{eq:Qz_q0}), the relative degree $m$ of $\hat{P}(z)$
 is 1 with $\hat{P}(z)$ being equal to $P(z)$ in this simulation
 example; the disturbance period $N=f_{s}/f_{0}=2000/20=100$; we choose
 $\alpha=0.99$. Also, we attach a low-pass filter with $n_{0}=1$
-to $Q(z)$ as in (xxxx). As shown in the solid line of Fig.
-\ref{fig:Magnitude-responses-of}, the plug-in RC with the $Q$-filter
+to $Q(z)$ as in (\ref{eq:Qz_q0}). As shown in the solid line of Fig.
+\ref{fig:Magnitude-responses-of-3}, the plug-in RC with the $Q$-filter
 generates high-gain control efforts exactly at $20\,\text{Hz}$ and
 its harmonics. Fig. \ref{fig:Laser-power-(control} illustrates the
 control signals $u(k)$ of the baseline control, the RC, and the case
@@ -5270,7 +5154,7 @@ Fig. \ref{fig:Evolution-of-melt-1}.
 \emph{Remark 1:} Practical feedback design has an effective servo
 bandwidth, above which the control efforts are required to be small
 for robustness. The baseline PI control and the $Q$-filter with $q_{0}(z^{-1})q_{0}(z)$
-are designed to account for this constraint. As shown in Fig. \ref{fig:Magnitude-responses-of},
+are designed to account for this constraint. As shown in Fig. \ref{fig:Magnitude-responses-of-3},
 above approximately 650 Hz, the magnitudes of the sensitivity functions
 of baseline PI control and RC are close to zero, leaving the corresponding
 frequency components unchanged.
@@ -5282,19 +5166,107 @@ a track of length 5 mm, and 4.5 hours for ten tracks of length 5 mm
 using two Intel Xeon Gold 6146 CPUs at 3.20 GHz with 24 cores in total.
 
 
-In this chapter, we develop a first-instance closed-loop high-fidelity
+% ========== Chapter 11
+ 
+\chapter{Conclusions and Future Work} \label{chap:Conclusions}
+
+In this dissertation, we develop a first-instance closed-loop high-fidelity
 simulation architecture by integrating finite element model (FEM)
 with feedback controls to reduce the in-process variations and advance
-the part quality in powder bed fusion (PBF) additive manufacturing.
+the part quality in laser powder fusion (LPBF) additive manufacturing. Under the infrastructure of the closed-loop simulation, we investigate the control-oriented modeling and multirate feedback control, respectively. We draw the following conclusions from our study and present some potential avenues for future work.
+
+\section*{Finite Element Modeling}
+
 We build an FEM to simulate the temperature response in LPBF and then
 validate the FEM by comparing its results with the experimental and
 analytical solutions. Employing the FEM, we justify the existence
 of the periodic disturbances in the evolution of the melt pool width.
-From there, implementing the proposed closed-loop simulation, we validate
-that the repetitive control algorithm attenuates the periodic disturbances
-more substantially by 35.97\% than the PI control.
 
-One avenue for future work is to expand the proposed closed-loop simulation
+\section*{New Hammerstein Modeling}
+
+Using the FEM data, we identify around the equilibrium point the linear
+system model from the laser power to the melt pool width. In addition,
+deriving from the Rosenthal equation, we reach a nonlinear closed-form
+expression of the steady-state melt pool width. Concatenating the
+nonlinear expression to the identified linear model, we develop the
+main Hammerstein model that captures more of the convoluted thermomechanical
+dynamics of LPBF. We prove that the Hammerstein mode gives a better
+approximation (e.g., 41\% increasing at 10 Hz) of the FEM result than
+the linear model. From there, we analyze the stability and robustness
+properties of the models and present a generic control scheme for
+the Hammerstein Model.
+
+\section*{Loop-shaping Control}
+
+In this dissertation, the control methodologies for precision
+positioning systems have been studied. The central concept is that
+flexible loop shaping is a convenient tool for addressing various
+servo problems. Multiple simulation and experimental results on actual
+engineering problems (e.g., the galvo scanner platform in LPBF) are used to validate the presented designs. Besides
+the examples given in this dissertation, the control structure has also
+been tested under other systems, such as electrical power steering
+in automotive vehicles \cite{chen2013inverse} and active suspension
+systems \cite{chen2013selective,landau2005adaptive}. 
+
+\section*{Fractional-order Repetitive control}
+
+Based on the loop-shaping control methodologies, we build three specific repetitive control (RC) algorithms to overcome the intrinsic limitation of the RC internal model $1/(1-z^{-N})$
+under fractional-order situations that arise in LPBF. To apply repetitive error rejection when the
+fundamental disturbance frequency does not divide the sampling frequency,
+the wide-band RC scheme widens the attenuation widths to include the
+desired frequencies of the periodic disturbance. The quasi RC method,
+on the other hand, creates an integer $N$ by selecting the greatest
+common divisor of the sampling and fundamental disturbance frequencies
+as the fictitious fundamental frequency. The multirate RC applies
+a new fast sampling frequency that allows for exact attenuation at
+the desired repetitive frequencies. Numerical and experimental results
+verify the effectiveness of all three algorithms, and the multirate
+RC algorithm outperforms the wide-band and quasi ones by providing
+more systematic, precise servo enhancement, particularly at high frequencies.
+
+\section*{$H_\infty$-based Model Inversion}
+
+Model inversion is fundamental to subsequent servo designs, such as RC design. We discuss new frequency-domain analysis and design
+approaches to invert a nonminimum-phase (NMP) linear time-invariant
+system, with a focus on robustness and needed design constraints in
+feedback implementations. We reveal that among existing model inversion
+techniques, the $H_{\infty}$-based method stands out by automatically
+identifying the inverse model without knowing the exact NMP zeros.
+Furthermore, we illustrated that modulating the location of the NMP
+zero only changes the system response at selective frequency regions.
+Leveraging this fact, for general NMP systems, we propose a discrete-time
+$H_{\infty}$-based optimal inversion to automatically design the
+inverse model for selective frequency regions defined by two weighting
+functions. Verification in complex high-order systems and unstable
+systems shows the strengths of the proposed algorithm.
+
+\section*{Multirate Spectral Analysis near Nyquist Frequency}
+
+We analyze the problem of sampled-data regulation control against
+structured disturbances around and beyond the Nyquist frequency. It is shown that the conventional sub-Nyquist single-rate
+high-gain control is infeasible to attenuate disturbances near and
+beyond the Nyquist frequency. We discover an intersection frequency
+defined as the principal sampled-data bandwidth $B_{p}$. Only for
+below-$B_{p}$ disturbances can single-rate high-gain control be effective
+in disturbance rejection. A spectral analysis is further proposed
+to look into individual spectral modes. The proposed characteristic
+feedback loop gains are combined with the performance frequency gain
+to evaluate the overall sampled-data performance. The results imply
+that the rejection of beyond-Nyquist vibration disturbances must rely
+on tools that can facilitate the intersample attenuation, such as
+customized multirate control \cite{XuChen_beyondNyquist15}, sampled-data
+internal model principle \cite{Fujioka:2011dy}, sampled-data LQG
+\cite{Chen:1991cp}, sampled-data all-stabilizing control \cite{Ravi:1990eo},
+and sampled-data $H_{\infty}$ theory (see \cite{Lall:2001cm} and
+the references therein). For potential future work, the proposed study
+may have synergy with the analysis and design of nonlinear systems
+in the frequency domain (e.g., \cite{jing2015frequency,lang2007output,xiao2016frequency}).
+
+\section*{Case Study: Repetitive Control in Closed-loop Simulation}
+
+Implementing the proposed closed-loop simulation, we validate
+that the RC algorithm attenuates the periodic disturbances
+more substantially by 35.97\% than the PI control. One avenue for future work is to expand the proposed closed-loop simulation
 to be used in multi-layer printing when macroscopic features begin
 to form. The proposed architecture enables simulating in the FEM the
 development of the macroscopic temperature history and the melt pool
@@ -5302,11 +5274,6 @@ geometries under the influence of feedback controls. To relieve the
 computation burden incurred by the high-fidelity simulation of multiple
 layers, we can start with a thin-wall build with small numbers of
 tracks (say one or two) within one layer.
-
-
-% ========== Chapter 11
- 
-\chapter{Conclusions and Future Work} \label{chap:Conclusions}
 
 %
 % ==========   Bibliography
@@ -5327,7 +5294,7 @@ tracks (say one or two) within one layer.
 \section{Main MATLAB Commands in the Proposed Closed-loop Simulation} \label{chapA:MATLAB-commands-closed-loop-simulation}
 
 \begin{center}
-\includegraphics[width=13cm]{Closed-loop-simulation/pseudocode_simplified}
+\includegraphics[width=11cm]{Closed-loop-simulation/pseudocode_simplified}
 \par\end{center}
 
 %==========
@@ -5379,7 +5346,7 @@ into (\ref{eq:Cdh}) gives
 \noindent which is equivalent to (\ref{eq:C}).
 
 %==========
-\section{Proof of Lemma \mbox{\ref{If--and}}} \label{chapA:Proof-of-Lemma-3}
+\section{Proof of Lemma \mbox{\ref{If--and}} in Section \ref{subsec:Characteristic-feedback-loop}} \label{chapA:Proof-of-Lemma-3}
 
 \begin{proof}
 Recall $\mathcal{L}^{-1}\left\{ P_{c}(s)/s\right\} =t^{n}/(n!)$ by
@@ -5420,7 +5387,7 @@ up to 8 are numerically evaluated in \cite{Astrom1984_zerosOfSampledSys}.
 There, a zero at $-1$ is evident for $n=2,4,6,8$. \end{remark}
 
 %==========
-\section{Proof of Lemma \mbox{\ref{For-general-mechatronic}}} \label{chapA:Proof-of-Lemma-5}
+\section{Proof of Lemma \mbox{\ref{For-general-mechatronic}} in Section \ref{subsec:Performance-Frequency-Gain-and}} \label{chapA:Proof-of-Lemma-5}
 \begin{proof}
 Take an inertia system $P_{c}(s)=1/s^{2}$ in motion control as example.\footnote{Without loss of generality, the gain of $P_{c}(s)$ is normalized
 to unity. Non-unity gains are canceled in the computation of $\Gamma_{k}(\Omega_{o})$
