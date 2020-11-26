@@ -153,13 +153,13 @@ A high-precision additive manufacturing process, laser powder bed fusion (LPBF) 
 
 This dissertation builds a first-instance closed-loop simulation framework by integrating high-fidelity finite element modeling with feedback controls originally developed for general mechatronics systems. By utilizing the output signals (e.g., melt pool width) retrieved from the finite element model (FEM) to directly update the control signals (e.g., laser power) sent to the model, the proposed closed-loop framework enables testing the limits of advanced controls in LPBF and surveying the parameter space fully to generate more predictable part qualities.
 
-Along the course of formulating the framework, we verify the FEM by comparing its results with experimental and analytical solutions and then use the FEM to understand the melt-pool evolution induced by the thermomechanical interactions in LPBF. In addition, we build a new Hammerstein model to capture more of the complex spatiotemporal thermal dynamics.
+Along the course of formulating the framework, we build and refine an FEM of the thermal response in LPBF and verify the FEM by comparing its results with experimental and analytical solutions. Thereafter, we use the FEM to understand the melt-pool evolution induced by the thermomechanical interactions in LPBF. In addition, we build a new Hammerstein mixed-fidelity model to capture more of the complex spatiotemporal thermal dynamics.
 
 Under the architecture of the closed-loop simulation, we discuss general loop-shaping algorithms and specifically develop a multirate fractional-order repetitive control (RC) algorithm that addresses an intrinsic RC limitation when the
 exogenous signal frequency cannot divide the sampling frequency of
 the sensor. We also investigate the model inversion techniques---an important piece of the loop-shaping control---and build an $H_\infty$-based optimal inversion that attains model accuracy at the frequency regions
 of interest while constraining noise amplification elsewhere to guarantee
-system robustness. Besides, we analyze spectral properties of the closed-loop signals under sample-data control and show that the single-rate high-gain feedback cannot reject disturbances beyond the Nyquist frequency. From there, we provide a case study on applying an RC algorithm to greatly attenuate periodic thermal variations in LPBF.
+system robustness. Besides, we analyze spectral properties of the closed-loop signals under sample-data control and show that the single-rate high-gain feedback cannot reject disturbances near and beyond the Nyquist frequency. From there, we provide a case study on applying an RC algorithm to greatly attenuate periodic thermal variations in LPBF.
 }
  
 %
@@ -205,7 +205,7 @@ system robustness. Besides, we analyze spectral properties of the closed-loop si
   {\narrower\noindent
 Along my Ph.D. journey, I have received a lot of support, help, and guidance.
 
-My deepest appreciation first goes to my advisor Prof. Xu Chen for the extraordinary guidance, support, and feedback on this dissertation. With every commented manuscript, every sharp research insight, and every timely discussion comes my sincerest gratitude. I have learned from Prof. Chen not only about profound knowledge of control theory but also about systematic research methodology, positive attitude, and perseverance. There were countless moments when I felt the icing of wisdom sprinkled on my head. I am also extremely grateful to Prof. Chen for always being supportive and believing in me. Besides, a lot of thanks to Prof. Chen and Prof. Zhanzha Jia for hosting the group gatherings and making me feel welcome, comfy, and at home.
+My deepest appreciation first goes to my advisor Prof. Xu Chen for the extraordinary guidance, support, and feedback on this dissertation. With every commented manuscript, every sharp research insight, and every timely discussion comes my sincerest gratitude. I have learned from Prof. Chen not only about profound knowledge of control theory but also about systematic research methodology, positive attitude, and perseverance. There were countless moments when I felt the icing of wisdom be sprinkled on my head. I am also extremely grateful to Prof. Chen for always being supportive and believing in me. Besides, a lot of thanks to Prof. Chen and Prof. Zhanzha Jia for hosting the group gatherings and making me feel welcome, comfy, and at home.
 
 I am greatly thankful to have Prof. Santosh Devasia, Prof. Ramulu Mamidala, and Prof. Behçet Açikmeşe as my committee members. I truly appreciate the time and effort they have put into this dissertation. I have learned a lot from Prof. Santosh Devasi and Prof. Ramulu Mamidala about their studies and research attitude. Prof. Behçet Açikmeşe gave me great lectures about nonlinear control. I am so thankful for Prof. Xinyu Zhao's insight in building the finite element model. My sincere thanks also go to Prof. Jiong Tang, Prof. Horea Ilies, and Prof. Chengyu Cao for their great suggestions on this dissertation. I would like to acknowledge the National Science Foundation and the UTC Institute for Advanced Systems Engineering for generously supporting this study.
 
@@ -228,9 +228,6 @@ Last but not least, I would like to thank my parents Meiyan Sun and Mingzhang Wa
 %
 
 \textpages
-
-% =========================================== Part 1
-\part{Introduction}
  
 % ========== Chapter 1
  
@@ -277,7 +274,7 @@ and in LMD \cite{hofman2012camera,salehi2006melt,fathi2007clad,fathi2008geometry
 \begin{centering}
 \includegraphics[clip,width=9cm]{Closed-loop-simulation/SLS schematic diagram-2}
 \par\end{centering}
-\centering{}\caption{\label{fig:Schematic-of-in-layer}Schematic of in-layer LPBF process.}
+\centering{}\caption{\label{fig:Schematic-of-in-layer}Schematic of in-layer LPBF processes.}
 \end{figure}
 \begin{figure}[!ht]
 \begin{centering}
@@ -327,13 +324,13 @@ From there, we build a repetitive control (RC) algorithm to attenuate variations
 of the melt pool width.
 
 % Hammerstein
-\subsection*{New Hammerstein Modeling}
+\subsection*{New Hammerstein Mixed-fidelity Modeling}
 Control-oriented modeling is a fundamental tool
 for predicting and engineering part qualities in LPBF. Using
 the FEM data, we identify a novel surrogate system model from the
 laser power to the melt pool width. Linking a linearized model with
 a memoryless nonlinear submodel, we develop a physics-based Hammerstein
-model that captures the complex spatiotemporal thermomechanical dynamics.
+mixed-fidelity model that captures the complex spatiotemporal thermomechanical dynamics.
 We verify the accuracy of the Hammerstein model using the FEM and
 prove that the linearized model is only a representation of the Hammerstein
 model around the equilibrium point. Along the way, we conduct the
@@ -376,24 +373,22 @@ of model inversion techniques. The proposed algorithm is validated
 on motion control systems and complex high-order systems.
 
 % Spectral analysis
-\subsection*{Multirate Spectral Analysis near Nyquist Frequency}
+\subsection*{Multirate Spectral Analysis near and Beyond Nyquist Frequency}
 A fundamental challenge in sampled-data control arises when a continuous-time plant is subject to disturbances that possess significant frequency components beyond the Nyquist frequency of the feedback sensor. Such intrinsic difficulties create formidable barriers for fast high-performance controls in modern and emerging technologies such as LPBF AM and vision servo, where the update speed of sensors is low compared to the dynamics of the plant. This dissertation analyzes spectral properties of closed-loop signals under such scenarios, with a focus on mechatronic systems. We propose a spectral analysis method that provides new understanding of the time- and frequency-domain sampled-data performance. Along the course of uncovering spectral details in such beyond-Nyquist controls, we also report a fundamental understanding on the infeasibility of single-rate high-gain feedback to reject disturbances not only beyond but also below the Nyquist frequency. New metrics and tools are then proposed to systematically quantify the limit of performance. Validation and practical implications of the limitations are provided with experimental case studies performed on the galvo scanner platform.
 
 \
 
 \noindent The rest of the dissertation is structured as follows:
 
-In Part \ref{part:Closed-loop-Simulation}, we build the architecture of the proposed closed-loop high-fidelity simulation with bidirectional communication between FEM and feedback control.
+In Part \ref{part:Closed-loop-Simulation}, we build the architecture of the proposed closed-loop high-fidelity simulation with bidirectional communication between FEM and feedback control in LPBF. We look into one essential component of the proposed closed-loop simulation, that is, the control-oriented modeling. In Chapter \ref{chap:FEM}, we build and refine the FEM of the temperature response in LPBF. Besides, from underlying physics, we develop in Chapter \ref{chap:New-Hammerstein-Modeling} a new Hammerstein mixed-fidelity model that captures more of the complicated spatiotemporal thermomechanical dynamics in LPBF.
 
-Part \ref{part:Control-oriented Modeling} elaborates one essential component of the closed-loop simulation, that is, the control-oriented modeling in LPBF. In Chapter \ref{chap:FEM}, we build and refine the FEM of the temperature response in LPBF. Besides, from underlying physics, we develop in Chapter \ref{chap:New-Hammerstein-Modeling} a new Hammerstein model that captures more of the complicated spatiotemporal thermomechanical dynamics in LPBF.
+In Part \ref{part:Multirate-Feedback-Control}, we investigate model-based multirate feedback control algorithms, which serves as the other key component of the proposed closed-loop simulation. In detail, Chapter \ref{chap:Loop-shaping-Control} introduces the general loop-shaping control methodologies. Chapter \ref{chap:Fractional-RC} builds a specific multirate fractional-order RC algorithm. Chapter \ref{chap:Model-Inversion} looks into the model inversion techniques---an important piece of the loop-shaping control. Chapter \ref{chap:Spectral-Analysis} analyzes spectral properties of the closed-loop signals under multirate sample-data control.
 
-In Part \ref{part:Multirate-Feedback-Control}, we investigate multirate feedback control algorithms, which serves as the other key component of the closed-loop simulation. In detail, Chapter \ref{chap:Loop-shaping-Control} introduces the general loop-shaping control methodologies. Chapter \ref{chap:Fractional-RC} builds a specific multirate fractional-order RC algorithm. Chapter \ref{chap:Model-Inversion} looks into the model inversion techniques---an important piece of the loop-shaping control. Chapter \ref{chap:Spectral-Analysis} analyzes spectral properties of the closed-loop signals under multirate sample-data control.
+Under the infrastructure of the closed-loop simulation, integrating control-oriented modeling with feedback control, in Part \ref{part:integration}, Chapter \ref{chap:RC-Closed-loop-Simulation} provides a case study on applying RC to regulate the periodic thermal interactions in LPBF. Chapter \ref{chap:Conclusions} concludes this dissertation and discusses potential future work.
 
-Under the infrastructure of the closed-loop simulation, Chapter \ref{chap:RC-Closed-loop-Simulation} provides a case study on applying RC to regulate the periodic thermal interactions in LPBF. Chapter \ref{chap:Conclusions} concludes this dissertation and discusses potential future work.
+% =========================================== Part 1
 
-% =========================================== Part 2
-
-\part{Closed-loop High-fidelity Simulation} \label{part:Closed-loop-Simulation}
+\part{Closed-loop High-fidelity Simulation and Control Oriented Modeling} \label{part:Closed-loop-Simulation}
 
 % ========== Chapter 2
 
@@ -448,8 +443,8 @@ flow studies). As application examples, we choose COMSOL Multiphysics,
 MATLAB, and \emph{LiveLink for MATLAB} to build the FEM, controller,
 and interface, respectively. We provide in this chapter the skeletons
 of an FEM of the thermal fields and a generic feedback control design. We
-will build the detailed FEM and controller in Parts \ref{part:Control-oriented Modeling}
-and \ref{part:Multirate-Feedback-Control}, respectively.
+will build the detailed FEM and controller in Chapter \ref{chap:FEM}
+and Part \ref{part:Multirate-Feedback-Control}, respectively.
 
 1) The governing equation for the conduction heat flow in LPBF is
 \begin{equation}
@@ -540,7 +535,7 @@ melt-pool-width variations.
 \begin{centering}
 \includegraphics[clip,width=13cm]{Closed-loop-simulation/closedloop_comsol_matlab_2}
 \par\end{centering}
-\centering{}\caption{\label{fig:Schematic-of-proposed}Schematic of proposed closed-loop
+\centering{}\caption{\label{fig:Schematic-of-proposed}Schematic of the proposed closed-loop
 simulation.}
 \end{figure}
 Fig. \ref{fig:Schematic-of-proposed} demonstrates the operating procedures
@@ -571,7 +566,7 @@ time $t_{end}$ ($\gg t_{f}$ in general).
 \begin{centering}
 \includegraphics[clip,width=11cm]{Closed-loop-simulation/pseudocode_math}
 \par\end{centering}
-\centering{}\caption{\label{fig:Pseudocode-for-the}Pseudocode of closed-loop simulation
+\centering{}\caption{\label{fig:Pseudocode-for-the}Pseudocode of the proposed closed-loop simulation
 algorithm.}
 \end{figure}
 We provide in Fig. \ref{fig:Pseudocode-for-the} the pseudocode of
@@ -595,12 +590,8 @@ also an interface specifically for the purpose of simulating feedback
 controllers in FEM. The built architecture will benefit and guide
 experiments by validating beforehand the effectiveness of the servo
 designs. Next we will present the detailed FEM and controller designs
-in Parts \ref{part:Control-oriented Modeling} and \ref{part:Multirate-Feedback-Control},
+in Chapter \ref{chap:FEM} and Part \ref{part:Multirate-Feedback-Control},
 respectively.
-
-% =========================================== Part 3
-
-\part{Control-oriented Modeling} \label{part:Control-oriented Modeling}
 
 % ========== Chapter 3
 
@@ -624,7 +615,7 @@ can be readily added to increase the model accuracy and provide more
 microscopic details of the melt pool that are beyond the focus of
 this dissertation.
 
-\section{Finite Element Model} \label{sec:FEM}
+\section{Governing Physics and Model Development} \label{sec:FEM}
 
 \begin{figure*}[!ht]
 \begin{centering}
@@ -759,7 +750,7 @@ $c_{x}=150\,$$\muup$m, and $c_{y}=100\,$$\muup$m.
 \includegraphics[clip,width=10cm]{Closed-loop-simulation/pseudocode_mpw}
 \par\end{centering}
 \centering{}\caption{\label{fig:Pseudocode-for-calculating}Pseudocode for calculating
-melt pool width.}
+the melt pool width.}
 \end{figure}
 
 \section{Model Verification} \label{sec:Model-Verification}
@@ -1006,7 +997,7 @@ to be introduced in Part \ref{part:Multirate-Feedback-Control}.
 
 % ========== Chapter 4
 
-\chapter{New Hammerstein Modeling} \label{chap:New-Hammerstein-Modeling}
+\chapter{New Hammerstein Mixed-fidelity Modeling} \label{chap:New-Hammerstein-Modeling}
 
 \section{Introduction}
 
@@ -1015,7 +1006,7 @@ dynamic system plays a fundamental role in understanding and regulating
 the LPBF and LPBF-related techniques such as LMD. This chapter establishes a new modeling and understanding of LPBF by
 taking advantage of the FEM and control-oriented modeling. The FEM developed in Chapter \ref{chap:FEM} serves as a simulation platform to provide data for verifying and identifying
 parameters of the proposed modeling schemes. In the control-oriented
-modeling of LPBF, stepping beyond commonly used low-order system models  \cite{kruth2007feedback,craeghs2010feedback,zheng2020distributed,song2011feedback,cao2015control,sammons2014repetitive}, this chapter develops a physics-based Hammerstein model that accommodates
+modeling of LPBF, stepping beyond commonly used low-order system models  \cite{kruth2007feedback,craeghs2010feedback,zheng2020distributed,song2011feedback,cao2015control,sammons2014repetitive}, this chapter develops a physics-based Hammerstein mixed-fidelity model that accommodates
 more of the convoluted spatiotemporal thermomechanical dynamics. The
 Hammerstein model is formulated by concatenating a memoryless nonlinear
 submodel derived from the Rosenthal equation to a linear model obtained
@@ -1032,7 +1023,7 @@ identifies the linear plant model from the FEM. Section \ref{sec:HAMMERSTEIN-MOD
 derives the closed-form expressions of the steady-state melt pool
 width and furthermore develops and analyzes the main Hammerstein model.
 
-\section{\label{sec:ANALYTICAL-SOLUTIONS-AND}Linear Model}
+\section{\label{sec:ANALYTICAL-SOLUTIONS-AND}Linear Model Around an Quasi-steady Equilibrium}
 
 From the FEM developed in Chapter \ref{chap:FEM}, we identify the linear plant model as $P(s)=0.001671/(s+1055)$
 from laser power changes $\delta q$ to melt pool width changes $\delta w$
@@ -1057,11 +1048,11 @@ As shown in the bottom plot of Fig. \ref{fig:Block-diagram-of-H}, $P_{d}(z)$
 is further normalized to $P(z)=P_{d}(z)/c=0.4099/(z-0.5901)$ that
 has unit DC gain, where $c$ is the DC gain of $P_{d}(z)$.
 
-\section{\label{sec:HAMMERSTEIN-MODEL-IN}Hammerstein Model in LPBF}
+\section{\label{sec:HAMMERSTEIN-MODEL-IN}Nonlinear Hammerstein Model}
 
 In this section, we show the limit of the linear model subject to
 the complicated nonlinear thermomechanical dynamics of LPBF and build
-a new physics-based Hammerstein Model to address the limitations.
+a new physics-based Hammerstein mixed-fidelity model to address the limitations.
 After that, we analyze the stability and robustness of the models.
 The Hammerstein model is conventionally employed in system identification
 for nonlinear systems, consisting of a nonlinear static element followed
@@ -1373,15 +1364,11 @@ element, we can use a high-order polynomial to approximate $f$ (solid
 line in Fig. \ref{fig:Steady-state-melt-pool}). Besides, \cite{rayouf2019new}
 proposes an approximate method for the cases when $f$ is not invertible.
 
-% ========== Chapter 5
-
-% \chapter{An Analytical Model of Melt Pool Width} \label{chap:Analytical-Model-MPW}
-
 % =========================================== Part 3
 
-\part{Multirate Feedback Control} \label{part:Multirate-Feedback-Control}
+\part{Model-based Multirate Feedback Control} \label{part:Multirate-Feedback-Control}
 
-% ========== Chapter 6
+% ========== Chapter 5
  
 \chapter{Loop-shaping Control} \label{chap:Loop-shaping-Control}
 
@@ -1463,7 +1450,7 @@ parameterizations. From there, Section \ref{sec:Instead-of-a} discusses
 the proposed controller factorizations, that is, inverse-based YK
 parameterization and its variant. A case study is conducted on a galvo
 scanner control in Section \ref{sec:A-case-study}, and several comments
-on feedforward designs are provided in Section \ref{sec:comments}.
+on feedforward designs are provided.
 
 \section{Feedback Controller Parameterization}
 
@@ -1910,7 +1897,7 @@ on $Q(z)$ \cite{chen2014optimal}.
 of gain scheduling on $Q$.}
 \end{figure}
 
-\section{A Case Study on a Galvo Scanner System} \label{sec:A-Case-Study-on-a-Galvo-Scanner-System}
+\section{Application on Laser Scanning} \label{sec:A-Case-Study-on-a-Galvo-Scanner-System}
 
 \label{sec:A-case-study} In this section, we provide the design and
 analysis steps for implementing the (outer-loop) inverse-based YK
@@ -2157,9 +2144,9 @@ with/without YK parameterization.}
 \caption{\label{fig:Spectrum-of-ooutput}Spectrum of output $y(k)$.}
 \end{figure}
 
-\section{Remarks}
+Here are some remarks about the implementation of the loop-shaping method.
 
-\label{sec:comments}\emph{The plant model and its inverse}: The
+\textbf{The plant model and its inverse}: The
 (inverse) model information is essential in the discussed control
 schemes since it not only provides convenience for feedback design
 but also is beneficial for tasks such as fault detection and disturbance
@@ -2175,7 +2162,7 @@ and spring.} Direct differentiation at high frequencies is not practical due to
 high-frequency resonances. High-frequency unstable zeros, if any,
 can be addressed by, for instance, shifting them inside the unit circle. A more systematic model inversion technique will be presented in Chapter \ref{chap:Model-Inversion}.
 
-\emph{Robust stability}:\emph{ }Strictly speaking, after $\hat{P}$
+\textbf{Robust stability}: Strictly speaking, after $\hat{P}$
 is applied in the controller design, we are implementing a robust
 version of YK parameterization. Notice that in the examples in Figs.
 \ref{fig:A-loop-shaping} and \ref{fig:Q_wideband}, the $Q$-filters
@@ -2191,22 +2178,22 @@ At high frequencies where the plant behavior itself cannot be well
 predicted, the magnitude of $Q(z)$ (and hence the add-on control
 efforts) is recommended to be kept small for robust stability. 
 
-\emph{Feedforward control}: The feedback perspective for precision
+\textbf{Feedforward control}: The feedback perspective for precision
 servo has been discussed. Necessity
 of feedforward control comes from the simple fact that feedback designs have
 bandwidth limitations. In the feedforward class of control algorithms, model-based
 design is also of essential importance. Inverse complementary sensitivity
 and inverse plant dynamics are two common approaches for feedforward design.
 When the process is repetitive, ILC is
-another powerful tool for error correction in the iteration domain.\emph{}
+another powerful tool for error correction in the iteration domain.
 
-\emph{Adaptive configuration}: When the disturbance spectra is not
+\textbf{Adaptive configuration}: When the disturbance spectra is not
 known (but with known structure), adaptive control can be applied
 to update the parameters of $Q(z)$ online. Investigation for the
 case of narrow-band disturbance rejection is provided in the references
 \cite{XuChen_TCST2012,chen2010unknown}.
 
-\emph{Reference of YK parameterization}: For additional materials
+\textbf{Reference of YK parameterization}: For additional materials
 about YK parameterization, readers can refer to references \cite{landau2005adaptive,doyle2013feedback,ANDERSON19981485}.
 In the discrete-time case, the simplest example of $Q$ design is
 using $Q(z)=\theta_{0}+\theta_{1}z^{-1}+\theta_{2}z^{-2}+...+\theta_{k_{Q}}z^{-k_{Q}}$,
@@ -2215,7 +2202,7 @@ adaptation algorithms to find a set of $\theta_{i}$ that minimizes
 the feedback error. This idea is also used in adaptive inverse control
 \cite{Widrow2007}.
 
-% ========== Chapter 7
+% ========== Chapter 6
 
 \chapter{Fractional-order Repetitive Control} \label{chap:Fractional-RC}
 
@@ -2982,7 +2969,7 @@ plot), the upper bound of the plant uncertainties is -2.16 dB (78\%)
 RC, although as shall be discussed in the next section, these two
 RCs have similar disturbance-attenuation performances. 
 
-\section{Numerical and Experimental Verification in a Dual-axis Galvo Scanner} \label{sec:Verification-Galvo-Scanner}
+\section{Numerical and Experimental Verification in a Dual-axis Laser Galvo Scanner} \label{sec:Verification-Galvo-Scanner}
 
 This section provides implementation guidance and performance comparison
 of the theoretical analyses. As a case study, the proposed fractional-order
@@ -3182,7 +3169,7 @@ the disturbances induced by the crosstalk are different in amplitudes.
 For each spike, as the frequency increases, the amplitude decreases
 (Fig. \ref{fig:FFT-of-the}).
 
-% ========== Chapter 8
+% ========== Chapter 7
 
 \chapter{$H_\infty$-based Model Inversion} \label{chap:Model-Inversion}
 
@@ -4062,9 +4049,9 @@ an infinite impulse response structure to reject unknown or time-varying
 narrow-band vibrations.
 
 
-% ========== Chapter 9
+% ========== Chapter 8
 
-\chapter{Multirate Spectral Analysis near Nyquist Frequency} \label{chap:Spectral-Analysis}
+\chapter{Multirate Spectral Analysis near and Beyond Nyquist Frequency} \label{chap:Spectral-Analysis}
 
 \section{Introduction}
 
@@ -5037,11 +5024,13 @@ servo performance in sampled-data control. Single-rate high-gain control
 is observed to amplify all beyond-Nyquist and even some below-Nyquist
 disturbances.
 
-% ========== Chapter 10
+% =========================================== Part 3
+\part{Integration} \label{part:integration}
 
+% ========== Chapter 9
 \chapter{Case Study: Repetitive Control in Closed-loop Simulation} \label{chap:RC-Closed-loop-Simulation}
 
-Under the infrastructure of the closed-loop simulation in Chapter \ref{chap:Closed-loop-Simulation}, we integrate control-oriented modeling in Part \ref{part:Control-oriented Modeling} with feedback control in Part \ref{part:Multirate-Feedback-Control} and evaluate
+Under the infrastructure of the closed-loop simulation in Chapter \ref{chap:Closed-loop-Simulation}, we integrate control-oriented modeling in Part \ref{part:Closed-loop-Simulation} with feedback control in Part \ref{part:Multirate-Feedback-Control} and evaluate
 the performance of RC in attenuating the periodic in-layer variations
 of the melt pool width.
 
@@ -5151,7 +5140,7 @@ using two Intel Xeon Gold 6146 CPUs at 3.20 GHz with 24 cores in total.
 \end{remark}
 
 
-% ========== Chapter 11
+% ========== Chapter 10
  
 \chapter{Conclusions and Future Work} \label{chap:Conclusions}
 
@@ -5167,7 +5156,7 @@ validate the FEM by comparing its results with the experimental and
 analytical solutions. Employing the FEM, we justify the existence
 of the periodic disturbances in the evolution of the melt pool width.
 
-\section*{New Hammerstein Modeling}
+\section*{New Hammerstein Mixed-fidelity Modeling}
 
 Using the FEM data, we identify around the equilibrium point the linear
 system model from the laser power to the melt pool width. In addition,
@@ -5225,7 +5214,7 @@ inverse model for selective frequency regions defined by two weighting
 functions. Verification in complex high-order systems and unstable
 systems shows the strengths of the proposed algorithm.
 
-\section*{Multirate Spectral Analysis near Nyquist Frequency}
+\section*{Multirate Spectral Analysis near and Beyond Nyquist Frequency}
 
 We analyze the problem of sampled-data regulation control against
 structured disturbances around and beyond the Nyquist frequency. It is shown that the conventional sub-Nyquist single-rate
