@@ -310,6 +310,8 @@ power or scan speed) in external control toolboxes (e.g., MATLAB).
 In this way, we design an interface that enables implementing
 and testing out feedback control strategies for LPBF thermal processes. Along the course of formulating the framework, we explore control-oriented modeling of the LPBF process and advanced feedback control algorithms to mitigate in-process variations and improve part quality in LPBF.
 
+In control-oriented modeling, we build and refine an FEM of the temperature response in LPBF, which serves as an essential component of the proposed closed-loop simulation. Implementing the developed FEM, we investigate the periodic melt pool evolution and identify a nonlinear physics-based Hammerstein model to represent the complex thermal dynamics in LPBF. In the other essential component of the closed-loop simulation, namely, feedback control, starting from a loop-shaping control method, this dissertation focuses on its RC implementation. In particular, we propose a multirate fractional-order RC to tackle disturbances with fractional-order periods. Furthermore, we explore model inversion that is fundamental to the loop-shaping control method and build an $H_\infty$-based inversion to automatically search for an optimal inverse model that fits selective frequency regions. Besides, we look into the spectral analysis in sample-data loop-shaping control to uncover the fundamental limitation of single-rate high-gain control near and beyond the Nyquist frequency.
+
 \section*{Major Contributions of This Dissertation}
 
 % Closed-loop simulation
@@ -388,7 +390,7 @@ Under the infrastructure of the closed-loop simulation, integrating control-orie
 
 % =========================================== Part 1
 
-\part{Closed-loop High-fidelity Simulation and Control Oriented Modeling} \label{part:Closed-loop-Simulation}
+\part{Closed-loop High-fidelity Simulation and Control-oriented Modeling} \label{part:Closed-loop-Simulation}
 
 % ========== Chapter 2
 
@@ -655,6 +657,9 @@ Solidus temperature $T_{sol}$ & $1873\,\text{K}$ \cite{mills2002recommended}\tab
 Latent heat of fusion $L_{f}$ & $295\,\text{kJ/kg}$ \cite{mills2002recommended}\tabularnewline
 Convection h.t. coeff. $h_{c}$ & $12.7\,\text{W/(m}^{2}\cdotp\text{K)}$\cite{masoomi2017laser}\tabularnewline
 $k$, $c_{p}$, and $\rho$ & See Fig. \ref{fig:Temperature-dependent-physical-p} \cite{arce2012thermal,masoomi2017laser,karayagiz2019numerical,yin2012simulation}\tabularnewline
+Shielding gas type & Argon \cite{yadroitsev2014selective}\tabularnewline
+Shielding gas temperature & $293.15\,\text{K}$\cite{masoomi2017laser}\tabularnewline
+Shielding gas flow rate & $167\,\text{cm}^{3}\text{/K}$ \cite{masoomi2017laser}\tabularnewline
 \hline 
 \end{tabular*}
 \end{table}
@@ -1001,9 +1006,9 @@ to be introduced in Part \ref{part:Multirate-Feedback-Control}.
 
 \section{Introduction}
 
-Appropriate modeling of this sophisticated
-dynamic system plays a fundamental role in understanding and regulating
-the LPBF and LPBF-related techniques such as LMD. This chapter establishes a new modeling and understanding of LPBF by
+Appropriate modeling of the sophisticated
+dynamic LPBF system plays a fundamental role in understanding and regulating
+the LPBF process and LPBF-related techniques such as the laser metal deposition (LMD). This chapter establishes a new modeling and understanding of LPBF by
 taking advantage of the FEM and control-oriented modeling. The FEM developed in Chapter \ref{chap:FEM} serves as a simulation platform to provide data for verifying and identifying
 parameters of the proposed modeling schemes. In the control-oriented
 modeling of LPBF, stepping beyond commonly used low-order system models  \cite{kruth2007feedback,craeghs2010feedback,zheng2020distributed,song2011feedback,cao2015control,sammons2014repetitive}, this chapter develops a physics-based Hammerstein mixed-fidelity model that accommodates
@@ -1023,7 +1028,7 @@ identifies the linear plant model from the FEM. Section \ref{sec:HAMMERSTEIN-MOD
 derives the closed-form expressions of the steady-state melt pool
 width and furthermore develops and analyzes the main Hammerstein model.
 
-\section{\label{sec:ANALYTICAL-SOLUTIONS-AND}Linear Model Around an Quasi-steady Equilibrium}
+\section{\label{sec:ANALYTICAL-SOLUTIONS-AND}Linear Model Around a Quasi-steady Equilibrium}
 
 From the FEM developed in Chapter \ref{chap:FEM}, we identify the linear plant model as $P(s)=0.001671/(s+1055)$
 from laser power changes $\delta q$ to melt pool width changes $\delta w$
@@ -1058,10 +1063,10 @@ The Hammerstein model is conventionally employed in system identification
 for nonlinear systems, consisting of a nonlinear static element followed
 by a linear dynamic element. Recent studies of the Hammerstein model
 target at parameter estimation and neural network based solutions
-\cite{rayouf2019new,doyle2002identification,ren2011identification}. 
+\cite{rayouf2019new,doyle2002identification,ren2011identification}. Here, we repurpose the method for identifying a nonlinear model for LPBF.
 
 \subsection{\label{subsec:Analytical-Solutions}Core Physics of Melt Pool at
-Quasi Steady State}
+Quasi-Steady State}
 
 When a moving point laser source is acting on a large thick plate,
 the analytical solution of (\ref{eq:heat_conduction}) in the steady
@@ -1150,7 +1155,7 @@ term on the right hand side of (\ref{eq:analytical_sol_mpw}).
 The first two assumptions are reasonably valid for all alloys except
 AlSi10Mg under typical LPBF configurations.
 
-\subsection{Infrastructure of the Hammerstein Model}
+\subsection{Structure of the Hammerstein Model}
 
 We start to build the Hammerstein model by lumping the memoryless
 nonlinear submodel in (\ref{eq:analytical_sol_mpw}) with the identified
@@ -1432,7 +1437,7 @@ and YK parameterization \cite{landau2005adaptive,landau2013benchmark,youla1976mo
 RC and its variants \cite{chen2014new,steinbuch2007design};
 (iii) broadband frequencies through adaptive disturbance rejection
 \cite{de2013adaptive}, adaptive noise cancellation \cite{widrow1975adaptive},
-and so on. This chapter discusses recent results in enhanced control
+and so on. This chapter discusses our recent results in enhanced control
 to reach the desired servo goals. 
 
 The main contributions of the chapter are:
@@ -2208,7 +2213,7 @@ the feedback error. This idea is also used in adaptive inverse control
 
 \section{Introduction} \label{sec:Fractional-RC-Introduction}
 
-RC \cite{inoue1981highpower} is designed to
+Repetitive control (RC) \cite{inoue1981highpower} is designed to
 track/reject periodic exogenous signals in applications with repetitive
 tasks, as mentioned in Section \ref{subsec:repetitive-control}. By learning from memories of previous iterations in the repetitive
 task, RC can drastically enhance current control performance in the
@@ -3685,7 +3690,7 @@ satisfies:
 $F(z)$. To minimize the delays, $m$ can be tuned and usually equals
 the relative degree of $G(z)$.
 \item \emph{model matching}: $\min||W_{1}(z)(F(z)G(z)-z^{-m})||_{\infty}$.
-Namely, we minimize the maximfum magnitude of the model mismatch $F(z)G(z)-z^{-m}$
+Namely, we minimize the maximum magnitude of the model mismatch $F(z)G(z)-z^{-m}$
 weighted by $W_{1}(z)$. The weighting $W_{1}(z)$ determines the
 frequency regions for accurate model matching. If $G^{-1}(z)$ is
 stable, the direct solution is $F(z)=z^{-m}G^{-1}(z)$. 
@@ -5247,7 +5252,7 @@ development of the macroscopic temperature history and the melt pool
 geometries under the influence of feedback controls. To relieve the
 computation burden incurred by the high-fidelity simulation of multiple
 layers, we can start with a thin-wall build with small numbers of
-tracks (say one or two) within one layer.
+tracks (say one or two) within one layer. Another avenue for future work is to bring the closed-loop simulation to experiments and experimentally verify the effectiveness of RC.
 
 %
 % ==========   Bibliography
