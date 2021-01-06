@@ -329,7 +329,7 @@ of the melt pool width.
 Control-oriented modeling is a fundamental tool
 for predicting and engineering part qualities in LPBF. Using
 the FEM data, we identify a novel surrogate system model from the
-laser power to the melt pool width. Linking a linearized model with
+laser power to the melt pool width. Linking a linear model with
 a memoryless nonlinear submodel, we develop a physics-based Hammerstein
 mixed-fidelity model that captures the complex spatiotemporal thermomechanical dynamics.
 We verify the accuracy of the Hammerstein model using the FEM and
@@ -718,9 +718,9 @@ layer of powder bed. Here, we use a selective meshing scheme to balance
 model accuracy with computation time: a fine quad-and-swept mesh with
 a maximum element size of $60\,$$\muup$m is applied to the central
 powder bed region that directly interacts with the energy beam, whereas
-less fine tetrahedral mesh ($3.5\,\text{mm}$) and triangular-and-swept
-mesh ($2\,\text{mm}$) are applied to the substrate and the peripheral
-powder bed, respectively. Fig. \ref{fig:Mesh-and-scan}b showcases
+less fine tetrahedral mesh ($1.1\,\text{mm}$) and triangular-and-swept
+mesh ($0.83\,\text{mm}$) are applied to the substrate and the peripheral
+powder bed, respectively. We adopt the FEM practice to use coarser element sizes for the substrate and the peripheral powder bed that undergoes less significant heat transfer than the central melt pool. Fig. \ref{fig:Mesh-and-scan}b showcases
 a surface temperature distribution, where the isotherm of $T=T_{m}$
 indicates the melt pool geometry.
 
@@ -1007,7 +1007,7 @@ to be introduced in Part \ref{part:Multirate-Feedback-Control}.
 
 Appropriate modeling of the sophisticated
 dynamic LPBF system plays a fundamental role in understanding and regulating
-the LPBF process and LPBF-related techniques such as the laser metal deposition (LMD). This chapter establishes a new modeling and understanding of LPBF by
+the LPBF process and related techniques such as the laser metal deposition (LMD). This chapter establishes a new modeling and understanding of LPBF by
 taking advantage of the FEM and control-oriented modeling. The FEM developed in Chapter \ref{chap:FEM} serves as a simulation platform to provide data for verifying and identifying
 parameters of the proposed modeling schemes. In the control-oriented
 modeling of LPBF, stepping beyond commonly used low-order system models  \cite{kruth2007feedback,craeghs2010feedback,zheng2020distributed,song2011feedback,cao2015control,sammons2014repetitive}, this chapter develops a physics-based Hammerstein mixed-fidelity model that accommodates
@@ -1045,7 +1045,7 @@ Hz), with a magnitude of 20 W and an add-on DC component of $q_{0}=60\,\text{W}$
 responses.}
 \end{figure}
 The frequency responses of the measured and identified systems match
-well with each other (Fig. \ref{fig:Measured-and-identified-H}). Under
+well with each other (Fig. \ref{fig:Measured-and-identified-H}). From a physics view- point, the low-pass dynamics is attributed to the high-density energy deposition of the laser and the first-order temporal dynamics of the temperature evolution in (\ref{eq:heat_conduction}). Under
 the sampling time $T_{s}$ of $0.5\,\text{ms}$, the zero-order-hold (ZOH)
 equivalent of the plant model is $P_{d}(z)=6.493\times10^{-7}/(z-0.5901)$.
 As shown in the bottom plot of Fig. \ref{fig:Block-diagram-of-H}, $P_{d}(z)$
@@ -1061,7 +1061,7 @@ After that, we analyze the stability and robustness of the models.
 The Hammerstein model is conventionally employed in system identification
 for nonlinear systems, consisting of a nonlinear static element followed
 by a linear dynamic element. Recent studies of the Hammerstein model
-target at parameter estimation and neural network based solutions
+aim at parameter estimation and neural network based solutions
 \cite{rayouf2019new,doyle2002identification,ren2011identification}. Here, we repurpose the method for identifying a nonlinear model for LPBF.
 
 \subsection{\label{subsec:Analytical-Solutions}Core Physics of Melt Pool at
@@ -1144,7 +1144,7 @@ q=\pi k(T_{m}-T_{0})w_{ssi}+\text{e}\pi\rho c_{p}(T_{m}-T_{0})u_{x}w_{ssi}^{2}/8
 Assumptions in deriving (\ref{eq:analytical_sol_mpw}) are:
 \begin{enumerate}
 \item $-\frac{\text{ln}(r^{*}N)}{r^{*}M}\approx0$, that is, $r^{*}\approx\frac{1}{\text{e}N}$,
-where $r^{*}$ is the values of $r$ at the melt pool width, $M=\frac{u_{x}}{2\kappa}$,
+where $r^{*}$ is the value of $r$ at the melt pool width, $M=\frac{u_{x}}{2\kappa}$,
 and $N=\frac{2\pi k(T_{m}-T_{0})}{q}$. 
 \item $r^{*}M\gg1$.
 \item The approximation of $q$ is found to be improved by accounting for
@@ -1196,8 +1196,8 @@ is thus formalized around the equilibrium point by connecting (\ref{eq:w})
 with $P(z)$ and letting $\delta w_{ssi}=w_{ssi}-w_{0}$ and $\delta q=q-q_{0}$.
 Certainly, due to simplifications in deriving (\ref{eq:analytical_sol_mpw}),
 its direct solution (\ref{eq:w}) only works at specific input conditions.
-Under the input signal of $\delta q_{10}=20\text{W}\sin(2\pi fT_{s}t)$,
-where $f=10\text{Hz}$ and $T_{s}$ is the sampling time, 
+Under the input signal of $\delta q_{10}=20\text{W}\sin(2\pi fT_{s}n)$,
+where $f=10\text{Hz}$, $n$ is the discrete-time integer time index, and $T_{s}$ is the sampling time, 
 \begin{figure}[!ht]
 \begin{centering}
 \includegraphics[clip,width=13cm]{Hammerstein/parameterID}
@@ -1209,7 +1209,7 @@ we can tell from Fig. \ref{fig:Parameter-identification-of} that
 the output of the Hammerstein model (dashed line) deviates greatly
 from the FEM result (solid line).
 
-To add more flexibility to the nonlinear block, we multiply $w_{ssi}$
+To add generalize the nonlinear block, we multiply $w_{ssi}$
 in (\ref{eq:w}) with a compensation factor $\alpha(q)$:
 \begin{equation}
 w_{ss}=\frac{\sqrt{k^{2}+4(Bq_{0}-k)Bq}-k}{2(Bq_{0}-k)}w_{0}\alpha(q),\label{eq:w-1}
